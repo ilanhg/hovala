@@ -1,5 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# email
+email: hovalaclick@gmail.com
+password: Hovalaclick!@
+
+# .ENV
+MONGO_URI = 'mongodb+srv://hovala:Egen4aHbPlOaQFmS@cluster0.5b4y5ff.mongodb.net/'
+PORT = 4000
+
 # dependencies
 /node_modules
 /.pnp
