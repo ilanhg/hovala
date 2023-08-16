@@ -1,18 +1,28 @@
 import React from "react";
 import "./App.css";
-import { Route, Routes, Navigate } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import { Route, Routes, Navigate, Outlet } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Navbar from"./components/Navbar"
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/homepage" element={<HomePage />} />
-        <Route path="/register" element={<Register />} />
+      <Routes>  
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/homepage" />} />
+        <Route
+          element={
+            <>
+              <Navbar />
+              <Outlet />
+            </>
+          }
+        >
+        <Route path="/homepage" element={<HomePage />} />
+        <Route path="/register" element={<Register />} />
+        </Route>
       </Routes>
     </>
   );
