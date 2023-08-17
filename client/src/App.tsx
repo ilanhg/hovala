@@ -8,6 +8,7 @@ import Navbar from"./components/Navbar"
 
 function App() {
   return (
+    
     <>
       <Routes>  
         <Route path="/login" element={<Login />} />
