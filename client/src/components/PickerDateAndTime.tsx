@@ -6,18 +6,22 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { DatePicker } from "@mui/x-date-pickers";
 import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
+import StairsIcon from '@mui/icons-material/Stairs';
+import ElevatorIcon from '@mui/icons-material/Elevator';
 
 export default function PickerDateAndTime(): JSX.Element {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={["DatePicke,TimePicker"]}>
+
+      <DemoContainer components={["DatePicke,TimePicker"]} sx={{  justifyContent:"center"  }}>
+        
+      <TextField id="outlined-basic" label="from"variant="outlined" />
+        <TextField id="outlined-basic" label="to" variant="outlined" />
+        <DatePicker label="Date"/>
+        <TimePicker label="Time"/>
         <Button variant="contained" disableElevation>
-          יאללה לארוז!
-        </Button>
-        <TimePicker label="זמן להובלה" />
-        <DatePicker label="תאריך הובלה" />
-        <TextField id="outlined-basic" label="יעד" variant="outlined" />
-        <TextField id="outlined-basic" label="מוצא" variant="outlined" />
+          Let's go!
+        </Button> 
       </DemoContainer>
     </LocalizationProvider>
   );
