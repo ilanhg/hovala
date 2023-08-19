@@ -12,13 +12,18 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import { useNavigate } from "react-router-dom";
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
+  
+const pages: string[] = ['Products', 'Pricing', 'About'];
+const settings: string[] = ['Profile', 'Account', 'Statistics', 'Logout'];
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -30,9 +35,12 @@ function ResponsiveAppBar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    
+    navigate("/login");
+   
   };
 
   return (
@@ -124,7 +132,9 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-
+          <Badge badgeContent={5} color="secondary" sx={{mr:2}}>
+      <MailIcon color="action" />
+    </Badge>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
