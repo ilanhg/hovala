@@ -42,6 +42,7 @@ export default function SignUp() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [info,setInfo] = useState();
   const navigate = useNavigate();
 
   const getOnChange = (setFunc: (newValue: string) => void) => {
@@ -51,7 +52,7 @@ export default function SignUp() {
     return handleOnChange;
   };
 
-  const registar = async () => {
+  const register = async () => {
     // debugger;
     const response = await axiosClient.post("http://localhost:4000/register", {
       firstName,
@@ -84,7 +85,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={register} noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -134,11 +135,10 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button
+            <Button 
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={registar}
             >
               Sign Up
             </Button>

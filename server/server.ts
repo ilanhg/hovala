@@ -37,43 +37,44 @@ app.post("/login", async (req: any, res: any) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    // const accessToken = generateAccessToken(email);
-    // const refreshToken = jwt.sign(email, process.env.REFRESH_TOKEN_SECERT);
-    // console.log(accessToken);
-    // res.json({ accessToken: accessToken, refreshToken: refreshToken });
 
-    // function generateAccessToken(email: any) {
-    //   return jwt.sign(
-    //     email,
-    //     process.env.ACCESS_TOKEN_SECERT /*,{expiresIn:"15s"}*/
-    //   );
-    // }
     const user = await UserModel.findOne({
       email: email,
-      
     });
-    bcrypt.compare(password,user?.password)
-    console.log(password)
+    bcrypt.compare(password, user?.password);
+    console.log(password);
     if (!user) {
       res.status(401).send("Bad username & password combination");
     } else {
-      res.status(200).send("Login succesfully!");
+      
+      const accessToken = generateAccessToken(email);
+      const refreshToken = jwt.sign(email, process.env.REFRESH_TOKEN_SECRET);
+      console.log(accessToken);
+      console.log(refreshToken)
+      res.json({ accessToken: accessToken, refreshToken: refreshToken })
+      res.status(200);
     }
   } catch {
     return res.status(500).send({ message: "server error" });
   }
 });
+function generateAccessToken(email: any) {
+  return jwt.sign(
+    email,
+    process.env.ACCESS_TOKEN_SECERT ,/*{expiresIn: '1d'}*/
+  );
+}
 app.post("/register", async (req: any, res: any) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const hashedPassword = await bcrypt.hash(req.body.password,10);
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
   const actualUser = new UserModel({
     firstName,
     lastName,
     email,
-    password:hashedPassword,
+    password: hashedPassword,
   });
   await actualUser.save();
 
