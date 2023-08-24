@@ -1,16 +1,27 @@
 import { UserModel } from "./mongoose/userSchema";
 import express from "express";
+import { authenticatToken, generateAccessToken,VALID_TOKENS,REFRESH_TOKENS } from "./guards/authentication";
 
 require("dotenv").config();
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const port = process.env.PORT || 8000;
 const bcrypt = require("bcrypt");
+const port = process.env.PORT || 8000;
 
 app.use(cors());
 app.use(express.json());
+const unless = function (pathsToIgnoreMiddleware: string[], middleware: any) {
+  return function (req: any, res: any, next: any) {
+    if (pathsToIgnoreMiddleware.includes(req.path)) {
+      return next();
+    } else {
+      return middleware(req, res, next);
+    }
+  };
+};
+app.use(unless(["/login", "/token"], authenticatToken));
 
 export default async function connectDB() {
   mongoose
@@ -46,24 +57,36 @@ app.post("/login", async (req: any, res: any) => {
     if (!user) {
       res.status(401).send("Bad username & password combination");
     } else {
-      
-      const accessToken = generateAccessToken(email);
-      const refreshToken = jwt.sign(email, process.env.REFRESH_TOKEN_SECRET);
+      const payload = email;
+      const accessToken = generateAccessToken(payload);
+      const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
       console.log(accessToken);
-      console.log(refreshToken)
-      res.json({ accessToken: accessToken, refreshToken: refreshToken })
+      console.log(refreshToken);
+      res.json({ accessToken: accessToken, refreshToken: refreshToken });
       res.status(200);
     }
   } catch {
     return res.status(500).send({ message: "server error" });
   }
 });
-function generateAccessToken(email: any) {
-  return jwt.sign(
-    email,
-    process.env.ACCESS_TOKEN_SECERT ,/*{expiresIn: '1d'}*/
-  );
-}
+app.post("/token", (req: any, res: any) => {
+  const refreshToken = req.body.refreshToken;
+  if (refreshToken) {
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      (err: any, email: any) => {
+        if (!err) {
+          if (REFRESH_TOKENS[username] == refreshToken) {
+            const accessToken = generateAccessToken(email);
+            return res.status(200).json({ accessToken });
+          }
+        }
+      }
+    );
+  }
+});
+
 app.post("/register", async (req: any, res: any) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
