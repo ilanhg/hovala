@@ -41,6 +41,7 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [mobileNo, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
   const [info,setInfo] = useState();
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ export default function SignUp() {
       firstName,
       lastName,
       email,
+      mobileNo,
       password,
     });
     // debugger;
@@ -97,6 +99,7 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  type="text"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -108,6 +111,7 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  type="text"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -122,7 +126,20 @@ export default function SignUp() {
                   type="email"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} >
+              <TextField
+                  onChange={getOnChange( setMobileNo)}
+                  autoComplete="given-name"
+                  name="MobileNo"
+                  required
+                  fullWidth
+                  id="MobileNo"
+                  label="MobileNo"
+                  type="number"
+                  autoFocus
+                /> 
+               </Grid>
+               <Grid item xs={12}>
                 <TextField
                   onChange={getOnChange(setPassword)}
                   required
