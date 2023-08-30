@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const bodyParconst jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const port = process.env.PORT || 8000;
 
@@ -52,18 +52,22 @@ app.post("/login", async (req: any, res: any) => {
     const user = await UserModel.findOne({
       email: email,
     });
-    bcrypt.compare(password, user?.password);
-    console.log(password);
     if (!user) {
       res.status(401).send("Bad username & password combination");
     } else {
-      const payload = {user: email};
-      const accessToken = generateAccessToken(payload);
-      const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
-      console.log(accessToken);
-      console.log(refreshToken);
-      res.json({ accessToken: accessToken, refreshToken: refreshToken });
-      res.status(200);
+      const passCompare = await bcrypt.compare(password, user?.password);
+      console.log(password);
+      if(passCompare){
+        const payload = {user: email};
+        const accessToken = generateAccessToken(payload);
+        const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+        console.log(accessToken);
+        console.log(refreshToken);
+        res.json({ accessToken: accessToken, refreshToken: refreshToken });
+        res.status(200);
+      }
+      return res.status(401).send('Unauthorized for this action!');
+     
     }
   } catch {
     return res.status(500).send({ message: "server error" });
@@ -107,6 +111,17 @@ app.post("/register", async (req: any, res: any) => {
     res.status(409).send("The user exists, Enter with another email");
   }
 });
+app.post('/logout',(req:any,res)=>{
+try{
+  const email = req.body.email;
+  delete VALID_TOKENS[email];
+  delete REFRESH_TOKENS[email];
+  res.status(200);
+}
+catch{
+  res.status(500)
+}
+})
 
 app.listen(port, () => {
   console.log(`Server is running at port:${port}`);

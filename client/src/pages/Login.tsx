@@ -56,6 +56,10 @@ export default function SignInSide() {
     });
     // debugger;
     if (response.status === 200) {
+      const accessToken = response?.data?.accessToken;
+      const refreshToken = response?.data?.refreshToken;
+      window.localStorage.setItem('accessToken', accessToken);
+      window.localStorage.setItem('refreshToken', refreshToken);
       navigate("/");
     } else {
       alert("username or password is incorrect");

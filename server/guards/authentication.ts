@@ -14,14 +14,12 @@ export function authenticatToken(req: any, res: any, next: any) {
   const accessToken = authHeader && authHeader.split(" ")[1];
   if (accessToken == null)
     return res.sendStatus(401).send("unauthorized for this action");
-  jwt.verify(accessToken,process.env.ACCESS_TOKEN_SECERT,(err: any, email: any) => {
-      if (err) {
-        return res.sendStatus(403);
-      } else if (VALID_TOKENS[email] != accessToken) {
-        return res.status(401).send("Unauthorized for action!");
+  jwt.verify(accessToken,process.env.ACCESS_TOKEN_SECERT,(err: any, payload: any) => {
+      if (!err && VALID_TOKENS[payload.user]==accessToken) {
+        req.email = payload;
+        next();
       }
-      req.email = email;
-      next();
+      return res.status(401).send('unauthorized for action')
     }
   );
 }
