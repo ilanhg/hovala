@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -57,6 +55,10 @@ export default function SignUp() {
       firstName,
       lastName,
       email,
+<<<<<<< Updated upstream
+=======
+      // mobileNo,
+>>>>>>> Stashed changes
       password,
     });
     // debugger;
@@ -121,7 +123,24 @@ export default function SignUp() {
                   type="email"
                 />
               </Grid>
+<<<<<<< Updated upstream
               <Grid item xs={12}>
+=======
+              <Grid item xs={12} >
+              <TextField
+                  onChange={getOnChange(setMobileNo)}
+                  autoComplete="given-name"
+                  name="MobileNo"
+                  required
+                  fullWidth
+                  id="MobileNo"
+                  label="MobileNo"
+                  type="string"
+                  autoFocus
+                /> 
+               </Grid>
+               <Grid item xs={12}>
+>>>>>>> Stashed changes
                 <TextField
                   onChange={getOnChange(setPassword)}
                   required
