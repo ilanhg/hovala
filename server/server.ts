@@ -5,8 +5,18 @@ import express  from "express";
 =======
 import { UserModel } from "./mongoose/userSchema";
 import express from "express";
+<<<<<<< Updated upstream
 import { authenticatToken, generateAccessToken,VALID_TOKENS,REFRESH_TOKENS } from "./guards/authentication";
 import { log } from "console";
+>>>>>>> Stashed changes
+=======
+import {
+  authenticatToken,
+  generateAccessToken,
+  VALID_TOKENS,
+  REFRESH_TOKENS,
+} from "./guards/authentication";
+import axios from "axios";
 >>>>>>> Stashed changes
 
 require("dotenv").config();
@@ -18,6 +28,7 @@ const mongoose=require ("mongoose");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+<<<<<<< Updated upstream
 const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID,process.env.TWILIO_AUTH_TOKEN)
 >>>>>>> Stashed changes
 const port = process.env.PORT || 8000;
@@ -26,6 +37,21 @@ app.use(cors());
 app.use(express.json());
 <<<<<<< Updated upstream
 =======
+=======
+const SerpApi = require("google-search-results-nodejs");
+
+const port = process.env.PORT || 8000;
+
+app.use(
+  cors({
+    credentials: true,
+    origin: "*",
+    maxAge: 2592000,
+    optionSuccessStatus: 200,
+  })
+);
+app.use(express.json());
+>>>>>>> Stashed changes
 
 const unless = function (pathsToIgnoreMiddleware: string[], middleware: any) {
   return function (req: any, res: any, next: any) {
@@ -36,7 +62,11 @@ const unless = function (pathsToIgnoreMiddleware: string[], middleware: any) {
     }
   };
 };
+<<<<<<< Updated upstream
 app.use(unless(["/login", "/token","/register"], authenticatToken));
+>>>>>>> Stashed changes
+=======
+app.use(unless(["/login", "/token","/api/homepage"], authenticatToken));
 >>>>>>> Stashed changes
 
 export default async function connectDB(){
@@ -49,15 +79,22 @@ export default async function connectDB(){
 connectDB();
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 app.get('/homepage', (req:any, res:any) => {
 =======
 app.get("/homepage", (req: any, res: any) => {
+=======
+app.post("/api/homepage", async (req: any, res: any) => {
+>>>>>>> Stashed changes
   try {
-    res.status(200).send("welcome");
+    const { search } = req.body;
+    console.log(search);
+    const {data} = await axios.get(`http://serpapi.com/locations.json?q=${search}&limit=-5`);
+    return res.send(data);
   } catch {
     return res.status(500).send({ message: "server error" });
   }
-  res.send("Express + TypeScript Server");
+  // res.send("Express + TypeScript Server");
 });
 
 
@@ -69,20 +106,28 @@ app.post("/login", async (req: any, res: any) => {
     const mobileNo = req.body.mobileNo;
 
     const user = await UserModel.findOne({
+<<<<<<< Updated upstream
       email: email,
      
+=======
+      email,
+>>>>>>> Stashed changes
     });
     if (!user) {
-      res.status(401).send("Bad username & password combination");
+      return res.status(401).send("Bad username & password combination");
     } else {
       const passCompare = await bcrypt.compare(password, user?.password);
       console.log(password);
-      if(passCompare){
-        const payload = {user: email};
+      if (passCompare) {
+        const payload = { user: email };
         const accessToken = generateAccessToken(payload);
-        const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+        const refreshToken = jwt.sign(
+          payload,
+          process.env.REFRESH_TOKEN_SECRET
+        );
         console.log(accessToken);
         console.log(refreshToken);
+<<<<<<< Updated upstream
         res.json({ accessToken: accessToken, refreshToken: refreshToken });
         // res.status(200).send('Login succesfully!')
      
@@ -114,6 +159,13 @@ app.post("/login", async (req: any, res: any) => {
 
   
      
+=======
+        return res
+          .status(200)
+          .json({ accessToken: accessToken, refreshToken: refreshToken });
+      }
+      return res.status(401).send("Unauthorized for this action!");
+>>>>>>> Stashed changes
     }
   } catch {
     return res.status(500).send({ message: "server error" });
@@ -136,20 +188,25 @@ app.post("login/verify",async(req,res)=>{
 app.post("/token", (req: any, res: any) => {
   const refreshToken = req.body.refreshToken;
   if (refreshToken) {
-    jwt.verify( refreshToken,process.env.REFRESH_TOKEN_SECRET,(err: any, payload: any) => {
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      (err: any, payload: any) => {
         if (!err) {
-          const email= payload.user;
+          const email = payload.user;
           if (REFRESH_TOKENS[email] == refreshToken) {
             const accessToken = generateAccessToken(payload);
             return res.status(200).json({ accessToken });
           }
         }
-      });
+      }
+    );
   }
-  return res.status(401).send('Unauthorized for this action!');
+  return res.status(401).send("Unauthorized for this action!");
 });
 
 app.post("/register", async (req: any, res: any) => {
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
   try{
     res.status(200).send('welcome');
@@ -210,14 +267,46 @@ app.post('/register', async (req:any, res:any) => {
 
  try{
     res.status(200).send('register succesfully!');
+=======
+  try {
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
+    const mobileNo = req.body.mobileNo;
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    const actualUser = new UserModel({
+      firstName,
+      lastName,
+      email,
+      mobileNo,
+      status: "PENDING",
+      password: hashedPassword,
+    });
+    await actualUser.save();
+    res.status(200).send("register succesfully!");
+>>>>>>> Stashed changes
   } catch {
     res.status(409).send('The user exists, Enter with another email');
   }
 });
+<<<<<<< Updated upstream
 
 
 
 
+=======
+app.post("/logout", (req: any, res) => {
+  try {
+    const email = req.body.email;
+    delete VALID_TOKENS[email];
+    delete REFRESH_TOKENS[email];
+    res.status(200);
+  } catch {
+    res.status(500);
+  }
+});
+>>>>>>> Stashed changes
 
 app.listen(port, () => {
   console.log(`Server is running at port:${port}`);

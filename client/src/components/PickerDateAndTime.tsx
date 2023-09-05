@@ -1,4 +1,4 @@
-import * as React from "react";
+import react, { useEffect, useState }  from "react";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -14,23 +14,30 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import {
   faElevator,
-  faHouse,
   faStairs,
 } from "@fortawesome/free-solid-svg-icons";
-import { Container } from "@mui/material";
+import { Autocomplete, Container, Grid, Typography } from "@mui/material";
 import Radio from "@mui/material/Radio";
-
+import axios from "axios";
+import parse from 'autosuggest-highlight/parse';
 
 export default function PickerDateAndTime(): JSX.Element {
-  const [Rooms, setRooms] = React.useState("");
-  const [FloorsFrom, setFloorsFrom] = React.useState("");
-  const [FloorsTo, setFloorsTo] = React.useState("");
-  const [selectedValueFrom, setSelectedValueFrom] = React.useState("yes");
-  const [selectedValueTo, setSelectedValueTo] = React.useState("yes");
+  const [FloorsFrom, setFloorsFrom] = useState("");
+  const [FloorsTo, setFloorsTo] = useState("");
+  const [selectedValueFrom, setSelectedValueFrom] = useState("yes");
+  const [selectedValueTo, setSelectedValueTo] = useState("yes");
+  const [search , setSearch]=useState("")
+  const[info,setInfo]=useState([])
 
-  const handleChangeRooms = (event: SelectChangeEvent) => {
-    setRooms(event.target.value as string);
-  };
+  const loactionData = async(search: any)=>{
+    try{
+    const {data} = await axios.post(`http://localhost:4000/api/homepage`,{search})
+    setInfo(data)
+    }catch{ 
+      console.error('Error')
+  }
+}
+
   const handleChangeFloorsFrom = (event: SelectChangeEvent) => {
     setFloorsFrom(event.target.value as string);
   };
@@ -43,6 +50,7 @@ export default function PickerDateAndTime(): JSX.Element {
   const handleChangeRadioTo = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValueTo(event.target.value);
   };
+ 
   return (
     <>
     <Container   sx={{
@@ -52,11 +60,23 @@ export default function PickerDateAndTime(): JSX.Element {
           components={["DatePicke,TimePicker"]}
           sx={{ justifyContent: "center" }}
         >
-          <TextField id="outlined-basic" label="from" variant="outlined" />
+          <TextField id="outlined-basic" label="from" variant="outlined"  onChange={(e)=>loactionData(e.target.value.toLowerCase()) } 
+         />
+         <Grid>
+           {info.map((location:any)=>{
+            return <Box>{location.name}</Box>
+          })}
+          </Grid>
+    
+  
           <TextField id="outlined-basic" label="to" variant="outlined" />
           <DatePicker label="Date" />
           <TimePicker label="Time" />
+<<<<<<< Updated upstream
           <Button sx={{width:"150px"}} variant="contained" >
+=======
+          <Button variant="contained">
+>>>>>>> Stashed changes
             Let's go!
           </Button>
           

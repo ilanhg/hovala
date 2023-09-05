@@ -13,8 +13,12 @@ const UserSchema= new Schema({
 const UserSchema = new Schema({
   id: {
     type: String,
+<<<<<<< Updated upstream
     // required: true,
     // trim: true,
+=======
+   
+>>>>>>> Stashed changes
   },
   firstName: {
     type: String,
