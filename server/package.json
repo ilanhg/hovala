@@ -11,12 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< Updated upstream
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-<<<<<<< Updated upstream
-=======
     "axios": "^1.5.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -24,13 +18,8 @@
     "express": "^4.18.2",
     "google-search-results-nodejs": "^2.1.0",
     "jsonwebtoken": "^9.0.1",
->>>>>>> Stashed changes
-    "mongoose": "^7.4.3"
-=======
-    "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.3",
     "twilio": "^4.16.0"
->>>>>>> Stashed changes
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
