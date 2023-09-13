@@ -73,11 +73,10 @@ const authProvider = ({ children }: { children: any }) => {
   const [loggedIn, setLoggedIn] = useState(checkToken());
   return (
     <AuthContext.Provider value={{ isLoggedIn }}>
-      <isAuth>
+      {/* <isAuth> */}
         {children}
-      </isAuth>
+      {/* </isAuth> */}
     </AuthContext.Provider>
   );
 };
-export { useAuthContext };
 export default authProvider;
