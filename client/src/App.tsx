@@ -8,7 +8,9 @@ import Navbar from"./components/Navbar"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import ForgotPass from "./pages/ForgotPass";
 
+
 function App() {
+
   return (
     
     <>
