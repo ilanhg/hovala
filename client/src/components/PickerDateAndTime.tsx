@@ -72,7 +72,7 @@ export default function PickerDateAndTime(): JSX.Element {
           <TextField id="outlined-basic" label="to" variant="outlined" />
           <DatePicker label="Date" />
           <TimePicker label="Time" />
-          <Button sx={{width:"150px"}} variant="contained" >
+          <Button variant="contained" >
             Let's go!
           </Button>
           
@@ -164,7 +164,7 @@ export default function PickerDateAndTime(): JSX.Element {
             alignItems: "center",
           }}
         >
-          <h3 style={{ marginLeft: "30px" }}>Stairs</h3>
+          <h3 style={{ marginLeft: "30px" }}>Floor</h3>
           <FontAwesomeIcon
             icon={faStairs}
             size="2xl"
