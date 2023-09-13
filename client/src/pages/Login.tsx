@@ -1,4 +1,3 @@
-import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,6 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axiosClient from "../promise/apiClient";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import GoogleSignIn from "../components/GoogleSignIn";
 export function Login(props: any) {
   return (
     <Typography
@@ -138,9 +138,10 @@ export default function SignInSide() {
               >
                 Sign In
               </Button>
+              <GoogleSignIn/>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/forgotPW" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
