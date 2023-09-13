@@ -15,12 +15,18 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { useNavigate } from "react-router-dom";
 import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
+import { AuthContext } from '../context/authContext';
   
 const pages: string[] = ['Products', 'Pricing', 'About'];
 const settings: string[] = ['Profile', 'Account', 'Statistics', 'Logout'];
 
 
 function ResponsiveAppBar() {
+  const auth = React.useContext(AuthContext)
+  console.log(auth.isLoggedIn);
+
+  
+  
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
@@ -99,7 +105,7 @@ function ResponsiveAppBar() {
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))}
+              )) }
             </Menu>
           </Box>
           <LocalShippingIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -135,11 +141,13 @@ function ResponsiveAppBar() {
           <Badge badgeContent={5} color="secondary" sx={{mr:2}}>
       <MailIcon color="action" />
     </Badge>
+     
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
+               {auth.isLoggedIn ? 
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
+              </IconButton>:<Button color="inherit" onClick={handleCloseUserMenu} >Login</Button>}
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
@@ -157,12 +165,12 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              { settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> 
           </Box>
         </Toolbar>
       </Container>

@@ -16,10 +16,11 @@ import {
   faElevator,
   faStairs,
 } from "@fortawesome/free-solid-svg-icons";
-import { Autocomplete, Container, Grid, Typography } from "@mui/material";
+import { Autocomplete, Container, Grid, List, ListItem, ListItemText, Typography } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import axios from "axios";
-import parse from 'autosuggest-highlight/parse';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+
 
 export default function PickerDateAndTime(): JSX.Element {
   const [FloorsFrom, setFloorsFrom] = useState("");
@@ -57,19 +58,40 @@ export default function PickerDateAndTime(): JSX.Element {
             alignItems: "center",}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer 
-          components={["DatePicke,TimePicker"]}
+          components={["DatePicke,TimePicker,Autocomplete"]}
           sx={{ justifyContent: "center" }}
         >
-          <TextField id="outlined-basic" label="from" variant="outlined"  onChange={(e)=>loactionData(e.target.value.toLowerCase()) } 
-         />
-         <Grid>
-           {info.map((location:any)=>{
-            return <Box>{location.name}</Box>
-          })}
-          </Grid>
-    
-  
-          <TextField id="outlined-basic" label="to" variant="outlined" />
+      <Autocomplete
+      sx={{ width: 250 ,display: {  md:  'fullWidth' } }}
+        noOptionsText="No locations"
+        includeInputInList
+        filterSelectedOptions
+        options={info.map((result:any) => result.name)}  
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="From"
+            variant="outlined"
+            fullWidth
+           onChange={(e)=>loactionData(e.target.value.toLowerCase())}
+          />
+        )}
+      />
+                 
+      <Autocomplete
+      
+        noOptionsText="No locations"
+        options={info.map((result:any) => result.name)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="To"
+            variant="outlined"
+            fullWidth
+           onChange={(e)=>loactionData(e.target.value.toLowerCase())}
+          />
+        )}
+      />
           <DatePicker label="Date" />
           <TimePicker label="Time" />
           <Button variant="contained" >
@@ -164,7 +186,7 @@ export default function PickerDateAndTime(): JSX.Element {
             alignItems: "center",
           }}
         >
-          <h3 style={{ marginLeft: "30px" }}>Floor</h3>
+          <h3 style={{ marginLeft: "30px" }}>Stairs</h3>
           <FontAwesomeIcon
             icon={faStairs}
             size="2xl"

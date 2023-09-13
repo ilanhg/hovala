@@ -2,6 +2,7 @@ import { UserModel } from "./mongoose/userSchema";
 import express from "express";
 import { authenticatToken, generateAccessToken,VALID_TOKENS,REFRESH_TOKENS } from "./guards/authentication";
 import nodemailer from 'nodemailer'
+import axios from "axios";
 require("dotenv").config();
 const app = express();
 const cors = require("cors");
@@ -78,7 +79,7 @@ const unless = function (pathsToIgnoreMiddleware: string[], middleware: any) {
     }
   };
 };
-app.use(unless(["/login", "/token","/register","/forgotPass"], authenticatToken));
+app.use(unless(["/login", "/token","/register","/forgotPass","/api/homepage"], authenticatToken));
 
 export default async function connectDB() {
   mongoose
@@ -99,6 +100,18 @@ app.get("/homepage", (req: any, res: any) => {
     return res.status(500).send({ message: "server error" });
   }
   res.send("Express + TypeScript Server");
+});
+app.post("/api/homepage", async (req: any, res: any) => {
+
+  try {
+    const { search } = req.body;
+    console.log(search);
+    const {data} = await axios.get(`http://serpapi.com/locations.json?q=${search}&limit=-5`);
+    return res.send(data);
+  } catch {
+    return res.status(500).send({ message: "server error" });
+  }
+  // res.send("Express + TypeScript Server");
 });
 
 app.post("/login", async (req: any, res: any) => {

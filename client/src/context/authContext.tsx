@@ -6,17 +6,11 @@ import React, {
 } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-let isLoggedIn: boolean;
 
+let isLoggedIn: boolean;
 export const AuthContext = createContext({ isLoggedIn: false });
 
-function checkToken() {
-  const isAccessToken = window.localStorage.getItem("accessToken");
-  return {
-    isLoggedIn: isAccessToken ? true : false,
-  };
-}
-const isAuth:any = function ({ children }: { children: any}) {
+const UseAuth: any = function ({ children }: any) {
   const navigate = useNavigate();
 
   const logout = useCallback(() => {
@@ -69,14 +63,21 @@ const isAuth:any = function ({ children }: { children: any}) {
   return <>{children}</>;
 };
 
-const authProvider = ({ children }: { children: any }) => {
+const AuthProvider = ({ children }: any) => {
+  function checkToken() {
+    const isAccessToken = window.localStorage.getItem("accessToken");
+    return isAccessToken ? true : false;
+  }
+
   const [loggedIn, setLoggedIn] = useState(checkToken());
+  
   return (
-    <AuthContext.Provider value={{ isLoggedIn }}>
-      {/* <isAuth> */}
-        {children}
-      {/* </isAuth> */}
+    <AuthContext.Provider value={{ isLoggedIn:loggedIn }}>
+      <UseAuth loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
+      {children}
+      </UseAuth>
     </AuthContext.Provider>
   );
 };
-export default authProvider;
+// export { useAuthContext };
+export default AuthProvider;
