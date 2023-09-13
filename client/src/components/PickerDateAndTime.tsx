@@ -72,11 +72,7 @@ export default function PickerDateAndTime(): JSX.Element {
           <TextField id="outlined-basic" label="to" variant="outlined" />
           <DatePicker label="Date" />
           <TimePicker label="Time" />
-<<<<<<< Updated upstream
           <Button sx={{width:"150px"}} variant="contained" >
-=======
-          <Button variant="contained">
->>>>>>> Stashed changes
             Let's go!
           </Button>
           

@@ -55,10 +55,6 @@ export default function SignUp() {
       firstName,
       lastName,
       email,
-<<<<<<< Updated upstream
-=======
-      // mobileNo,
->>>>>>> Stashed changes
       password,
     });
     // debugger;
@@ -123,24 +119,7 @@ export default function SignUp() {
                   type="email"
                 />
               </Grid>
-<<<<<<< Updated upstream
               <Grid item xs={12}>
-=======
-              <Grid item xs={12} >
-              <TextField
-                  onChange={getOnChange(setMobileNo)}
-                  autoComplete="given-name"
-                  name="MobileNo"
-                  required
-                  fullWidth
-                  id="MobileNo"
-                  label="MobileNo"
-                  type="string"
-                  autoFocus
-                /> 
-               </Grid>
-               <Grid item xs={12}>
->>>>>>> Stashed changes
                 <TextField
                   onChange={getOnChange(setPassword)}
                   required
