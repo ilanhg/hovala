@@ -4,22 +4,22 @@ import { Route, Routes, Navigate, Outlet } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Navbar from"./components/Navbar"
+import Navbar from "./components/Navbar";
+import AuthProvider from "./context/authContext";
+import AuthProtectedRout from "./components/AuthProtectedRout";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import ForgotPass from "./pages/ForgotPass";
 
-
 function App() {
-
   return (
-    
-    <>
+   
+    <AuthProvider>
+       <>
     <GoogleOAuthProvider clientId="341775163512-3nn5hqta1nro76d0samvcpkutvr9a15o.apps.googleusercontent.com">
-      <Routes>  
+      <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Navigate to="/homepage" />} /> 
+        <Route path="/" element={<Navigate to="/homepage" />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/forgotPW" element={<ForgotPass />} />
         <Route
           element={
             <>
@@ -28,12 +28,24 @@ function App() {
             </>
           }
         >
-        <Route path="/homepage" element={<HomePage />} />
-       
+          <Route path="/homepage" element={<HomePage />} />
+          {/* <Route
+            path="/homepage"
+            element={
+              <AuthProtectedRout>
+                <HomePage />
+              </AuthProtectedRout>
+            }
+          /> */}
+          {/* <Route path="/homepage" element={<AuthProtectedRout><HomePage /></AuthProtectedRout>} >
+                  <Route path="profile" element={<><h1>PROFILE</h1></>}/>
+                </Route>
+                <Route path="support" element={<h2>SUPPORT</h2>}/> */}
         </Route>
       </Routes>
       </GoogleOAuthProvider>;
     </>
+    </AuthProvider>
   );
 }
 
