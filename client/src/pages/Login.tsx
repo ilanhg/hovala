@@ -56,6 +56,7 @@ export default function SignInSide() {
       password,
       mobileNo
     });
+    
     // debugger;
     if (response.status === 200) {
       const accessToken = response?.data?.accessToken;
@@ -63,6 +64,7 @@ export default function SignInSide() {
       window.localStorage.setItem('accessToken', accessToken);
       window.localStorage.setItem('refreshToken', refreshToken);
       navigate("/");
+      return window.location.replace("/homepage")
     } else {
       alert("username or password is incorrect");
     }

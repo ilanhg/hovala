@@ -96,6 +96,7 @@ connectDB();
 app.get("/homepage", (req: any, res: any) => {
   try {
     res.status(200).send("welcome");
+   
   } catch {
     return res.status(500).send({ message: "server error" });
   }
@@ -135,6 +136,7 @@ app.post("/login", async (req: any, res: any) => {
         console.log(refreshToken);
         return res.json({ accessToken: accessToken, refreshToken: refreshToken });
         // res.status(200);
+        
       }
       return res.status(401).send('Unauthorized for this action!');
      
