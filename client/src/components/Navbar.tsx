@@ -7,15 +7,16 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { useNavigate } from "react-router-dom";
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
 import { AuthContext } from '../context/authContext';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import axios from 'axios';
+
   
 const pages: string[] = ['Products', 'Pricing', 'About'];
 const settings: string[] = ['Profile', 'Account', 'Statistics', 'Logout'];
@@ -26,28 +27,80 @@ function ResponsiveAppBar() {
   console.log(auth.isLoggedIn);
 
   
-  
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
-
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<any>(null);
+  
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
+    setAnchorElNav(event.currentTarget); 
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorElUser(event.currentTarget); 
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    
   };
+  const handlePageClick = (page:any)=>{
+    switch (page) {
+      case 'Products':
+        navigate('Products')
+        break;
+      case 'Pricing':
+        navigate('Pricing')
+        break;
+      case 'About':
+        navigate('/About')
+        break;
+      default:
+        break;
+    }
+    handleCloseNavMenu();
+  }
   
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-    
-    navigate("/login");
-   
+   setAnchorElUser(null);
+     
   };
+  const handleSettingClick = (setting:any) => {
+    switch (setting) {
+      case 'Profile':
+        navigate('Profile')
+        break;
+      case 'Account':
+        navigate('Account')
+        break;
+      case 'Statistics':
+        navigate('/Statistics')
+        break;
+      case 'Logout':
+        navigate('/login')
+        break;
+      default:
+        break;
+    }
+    handleCloseUserMenu();
+  };
+  
+  const [user, setUser] = React.useState("");
+
+  // React.useEffect(() => {
+  //   const users = axios.get('http://localhost:4000/register').then((response) => {
+  //     setuser(response.data);
+  //     console.log(user)
+  //   });
+  // }, []);
+//   const loactionData = async(search: any)=>{
+//     try{
+//     const {data} = await axios.post(`http://localhost:4000/api/homepage`)
+//     setUser(data)
+//     console.log(user);
+    
+//     }catch{ 
+//       console.error('Error')
+//   }
+// }
 
   return (
     <AppBar position="static">
@@ -102,7 +155,7 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={()=>handlePageClick(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               )) }
@@ -131,23 +184,28 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={()=>handlePageClick(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
             ))}
-          </Box>
-          <Badge badgeContent={5} color="secondary" sx={{mr:2}}>
-      <MailIcon color="action" />
-    </Badge>
-     
+          </Box>     
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
                {auth.isLoggedIn ? 
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>:<Button color="inherit" onClick={handleCloseUserMenu} >Login</Button>}
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} >
+                    <IconButton sx={{ color: "white" }}
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton >
+             
+              </IconButton>:<Button color="inherit" onClick={()=>navigate("/login")} >Login</Button>}
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
@@ -166,10 +224,12 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               { settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleSettingClick(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
+            
+              
             </Menu> 
           </Box>
         </Toolbar>

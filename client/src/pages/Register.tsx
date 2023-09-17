@@ -41,7 +41,6 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
-  const [info,setInfo] = useState();
   const navigate = useNavigate();
 
   const getOnChange = (setFunc: (newValue: string) => void) => {

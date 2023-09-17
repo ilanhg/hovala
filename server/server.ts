@@ -97,6 +97,7 @@ connectDB();
 app.get("/homepage", (req: any, res: any) => {
   try {
     res.status(200).send("welcome");
+   
   } catch {
     return res.status(500).send({ message: "server error" });
   }
@@ -124,7 +125,7 @@ app.post("/login", async (req: any, res: any) => {
       email: email,
     });
     if (!user) {
-      res.status(401).send("Bad username & password combination");
+      return res.status(401).send("Bad username & password combination");
     } else {
       const passCompare = await bcrypt.compare(password, user?.password);
       console.log(password);
@@ -134,8 +135,9 @@ app.post("/login", async (req: any, res: any) => {
         const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
         console.log(accessToken);
         console.log(refreshToken);
-        res.json({ accessToken: accessToken, refreshToken: refreshToken });
-        res.status(200);
+        return res.json({ accessToken: accessToken, refreshToken: refreshToken });
+        // res.status(200);
+        
       }
       return res.status(401).send('Unauthorized for this action!');
      

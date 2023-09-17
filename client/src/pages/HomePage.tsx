@@ -3,10 +3,7 @@ import  Slider  from '../components/Slider'
 import PickerDateAndTime from '../components/PickerDateAndTime'
 import  { Container}  from '@mui/material'
 
-
-
 export default function HomePage() {
- 
 
   return (
     
