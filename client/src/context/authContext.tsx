@@ -79,5 +79,5 @@ const AuthProvider = ({ children }: any) => {
     </AuthContext.Provider>
   );
 };
-// export { useAuthContext };
+
 export default AuthProvider;

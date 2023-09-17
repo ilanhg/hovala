@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router";
 
 const AuthProtectedRout = ({ children }: any) => {
   const navigate = useNavigate();
-  const auth = React.useContext(AuthContext);
+  const auth = useContext(AuthContext);
   console.log(auth.isLoggedIn);
 
   useEffect(() => {

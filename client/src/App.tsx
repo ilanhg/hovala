@@ -13,6 +13,7 @@ import ForgotPass from "./pages/ForgotPass";
 import Account from "./pages/Account";
 import Statistics from "./pages/Statistics";
 import SelectFurniture from "./pages/SelectFurniture";
+import OTP from "./pages/OTP";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/homepage" />} />
         <Route path="/register" element={<Register />} />
+        <Route  path='/forgotpass'element={<ForgotPass/>}/>
+        <Route path='/otp' element={<OTP/>}/>
         <Route
           element={
             <>

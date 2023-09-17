@@ -156,7 +156,7 @@ export default function SignInSide() {
               <GoogleSignIn/>
               <Grid container>
                 <Grid item xs>
-                  <Link href="/forgotPW" variant="body2">
+                  <Link href="/forgotPass" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -23,7 +23,7 @@ const settings: string[] = ['Profile', 'Account', 'Statistics', 'Logout'];
 
 
 function ResponsiveAppBar() {
-  const auth = React.useContext(AuthContext)
+  const auth = useContext(AuthContext)
   console.log(auth.isLoggedIn);
 
   
