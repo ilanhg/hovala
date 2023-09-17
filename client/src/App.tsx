@@ -9,6 +9,7 @@ import AuthProvider from "./context/authContext";
 import AuthProtectedRout from "./components/AuthProtectedRout";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import ForgotPass from "./pages/ForgotPass";
+import OTP from "./pages/OTP";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/homepage" />} />
         <Route path="/register" element={<Register />} />
+        <Route  path='/forgotpass'element={<ForgotPass/>}/>
+        <Route path='/otp' element={<OTP/>}/>
         <Route
           element={
             <>

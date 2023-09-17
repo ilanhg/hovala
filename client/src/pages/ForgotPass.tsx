@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,12 +10,15 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import axiosClient from "../promise/apiClient";
+import OTP from "./OTP";
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function ForgotPass() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail]: any = useState();
+  const [otp, setOtp]: any = useState();
+
   const navigate = useNavigate();
   const getOnChange = (setFunc: (newValue: string) => void) => {
     const handleOnChange = (e: any) => {
@@ -25,16 +28,24 @@ export default function ForgotPass() {
   };
   //axios not working- need help
   const handleSubmit = async () => {
-    const response = await axios.post("http://localhost:4000/forgotPass", {recipient_email: email})
-    // event.preventDefault();
-    if (response.status ===200) {
-        console.log(email)
+    if (email) {
       const OTP = Math.floor(Math.random() * 9000 + 1000);
       console.log(OTP);
-      // setOTP(OTP);
-    navigate("/login")
+      setOtp(OTP);
+
+      const response = await axiosClient.post(
+        "http://localhost:4000/forgotPass",
+        {
+          OTP,
+          recipient_email: email,
+        }
+      );
+      if (response.status === 200) {
+        navigate("/otp");
+      }
+      return;
     }
-    // return alert("Please enter your email");
+    return alert("Please enter your email");
   };
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -54,11 +65,7 @@ export default function ForgotPass() {
           <Typography component="h1" variant="h5">
             Password Recovery
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               onChange={getOnChange(setEmail)}
               margin="normal"
@@ -70,7 +77,8 @@ export default function ForgotPass() {
               autoComplete="email"
               autoFocus
             />
-            <Button onClick={handleSubmit}
+            <Button
+              onClick={handleSubmit}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -80,6 +88,7 @@ export default function ForgotPass() {
           </Box>
         </Box>
       </Container>
+      <OTP email={email} otp={otp}/>
     </ThemeProvider>
   );
 }
