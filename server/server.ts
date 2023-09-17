@@ -9,6 +9,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const {Oauth2Client} = require('google-auth-library')
 const port = process.env.PORT || 8000;
 
 function sendEmail({ recipient_email, OTP }:any) {
@@ -142,7 +143,7 @@ app.post("/login", async (req: any, res: any) => {
      
     }
   } catch {
-    return res.status(500).send({ message: "server error" });
+    return res.status(500)
   }
 });
 app.post("/token", (req: any, res: any) => {
@@ -193,7 +194,7 @@ app.post('/forgotPass',async(req:any,res:any)=>{
     res.status(401).send("wrong email");
   } else {
     sendEmail(email)
-    .then((response:any) => res.send(response.message))
+    .then((response:any) => res.status(200).send(response.message))
     .catch((error) => res.status(500).send(error.message));
 
   }

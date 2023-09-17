@@ -52,14 +52,12 @@ export default function SignInSide() {
   };
 
   const login = async () => {
-    // debugger;
     const response = await axiosClient.post("http://localhost:4000/login", {
       email,
       password,
       mobileNo
     });
-    
-    // debugger;
+
     if (response.status === 200) {
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
@@ -159,7 +157,7 @@ export default function SignInSide() {
               <GoogleSignIn/>
               <Grid container>
                 <Grid item xs>
-                  <Link href="/forgotPW" variant="body2">
+                  <Link href="/forgotPass" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
