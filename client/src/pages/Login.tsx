@@ -15,6 +15,8 @@ import axiosClient from "../promise/apiClient";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import GoogleSignIn from "../components/GoogleSignIn";
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+
 export function Login(props: any) {
   return (
     <Typography
@@ -102,7 +104,8 @@ export default function SignInSide() {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
+              {/* <LockOutlinedIcon /> */}
+              <LocalShippingIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in

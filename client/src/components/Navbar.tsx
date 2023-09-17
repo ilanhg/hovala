@@ -13,10 +13,10 @@ import MenuItem from '@mui/material/MenuItem';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { useNavigate } from "react-router-dom";
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
 import { AuthContext } from '../context/authContext';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { log } from 'console';
+import axios from 'axios';
+
   
 const pages: string[] = ['Products', 'Pricing', 'About'];
 const settings: string[] = ['Profile', 'Account', 'Statistics', 'Logout'];
@@ -45,7 +45,7 @@ function ResponsiveAppBar() {
   const handlePageClick = (page:any)=>{
     switch (page) {
       case 'Products':
-        navigate('Profile')
+        navigate('Products')
         break;
       case 'Pricing':
         navigate('Pricing')
@@ -83,6 +83,24 @@ function ResponsiveAppBar() {
     handleCloseUserMenu();
   };
   
+  const [user, setUser] = React.useState("");
+
+  // React.useEffect(() => {
+  //   const users = axios.get('http://localhost:4000/register').then((response) => {
+  //     setuser(response.data);
+  //     console.log(user)
+  //   });
+  // }, []);
+//   const loactionData = async(search: any)=>{
+//     try{
+//     const {data} = await axios.post(`http://localhost:4000/api/homepage`)
+//     setUser(data)
+//     console.log(user);
+    
+//     }catch{ 
+//       console.error('Error')
+//   }
+// }
 
   return (
     <AppBar position="static">
@@ -172,11 +190,7 @@ function ResponsiveAppBar() {
                 {page}
               </Button>
             ))}
-          </Box>
-          <Badge badgeContent={5} color="secondary" sx={{mr:2}}>
-      <MailIcon color="action" />
-    </Badge>
-     
+          </Box>     
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
                {auth.isLoggedIn ? 
@@ -190,6 +204,7 @@ function ResponsiveAppBar() {
               >
                 <AccountCircle />
               </IconButton >
+             
               </IconButton>:<Button color="inherit" onClick={()=>navigate("/login")} >Login</Button>}
             </Tooltip>
             <Menu
