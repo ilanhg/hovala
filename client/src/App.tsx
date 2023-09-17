@@ -13,6 +13,8 @@ import ForgotPass from "./pages/ForgotPass";
 import Account from "./pages/Account";
 import Statistics from "./pages/Statistics";
 import OTP from "./pages/OTP";
+import AboutUs from "./pages/AboutUs";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -24,17 +26,20 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/homepage" />} />
         <Route path="/register" element={<Register />} />
-        <Route  path='/forgotpass'element={<ForgotPass/>}/>
+        <Route  path='/forgotPass'element={<ForgotPass/>}/>
         <Route path='/otp' element={<OTP/>}/>
+        
         <Route
           element={
             <>
               <Navbar />
               <Outlet />
+              <Footer/>
             </>
           }
         >
           <Route path="/homepage" element={<HomePage />} />
+          <Route path='/About' element={<AboutUs/>}/>
           <Route path="/profile" element={<AuthProtectedRout><Profile /></AuthProtectedRout>} />
           <Route path="/account" element={<AuthProtectedRout><Account /></AuthProtectedRout>} />
           <Route path="/statistics" element={<AuthProtectedRout><Statistics /></AuthProtectedRout>} />
