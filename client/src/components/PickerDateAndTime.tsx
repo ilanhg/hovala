@@ -20,6 +20,7 @@ import { Autocomplete, Container, Grid, List, ListItem, ListItemText, Typography
 import Radio from "@mui/material/Radio";
 import axios from "axios";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useNavigate } from "react-router-dom";
 
 
 export default function PickerDateAndTime(): JSX.Element {
@@ -29,6 +30,8 @@ export default function PickerDateAndTime(): JSX.Element {
   const [selectedValueTo, setSelectedValueTo] = useState("yes");
   const [search , setSearch]=useState("")
   const[info,setInfo]=useState([])
+
+  const navigate = useNavigate()
 
   const loactionData = async(search: any)=>{
     try{
@@ -94,7 +97,7 @@ export default function PickerDateAndTime(): JSX.Element {
       />
           <DatePicker label="Date" />
           <TimePicker label="Time" />
-          <Button variant="contained" >
+          <Button variant="contained" onClick={()=>navigate("/SelectFurniture") } >
             Let's go!
           </Button>
           

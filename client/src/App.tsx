@@ -12,6 +12,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import ForgotPass from "./pages/ForgotPass";
 import Account from "./pages/Account";
 import Statistics from "./pages/Statistics";
+import SelectFurniture from "./pages/SelectFurniture";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           }
         >
           <Route path="/homepage" element={<HomePage />} />
+          <Route path="SelectFurniture" element={ <SelectFurniture/>}/>
           <Route path="/profile" element={<AuthProtectedRout><Profile /></AuthProtectedRout>} />
           <Route path="/account" element={<AuthProtectedRout><Account /></AuthProtectedRout>} />
           <Route path="/statistics" element={<AuthProtectedRout><Statistics /></AuthProtectedRout>} />

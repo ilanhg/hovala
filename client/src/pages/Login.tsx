@@ -52,21 +52,18 @@ export default function SignInSide() {
   };
 
   const login = async () => {
-    // debugger;
     const response = await axiosClient.post("http://localhost:4000/login", {
       email,
       password,
       mobileNo
     });
-    
-    // debugger;
     if (response.status === 200) {
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
       window.localStorage.setItem('accessToken', accessToken);
       window.localStorage.setItem('refreshToken', refreshToken);
       navigate("/");
-      return window.location.replace("/homepage")
+      return window.location.reload()
     } else {
       alert("username or password is incorrect");
     }
@@ -103,7 +100,7 @@ export default function SignInSide() {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <Avatar sx={{  bgcolor: "secondary.main" }}>
               {/* <LockOutlinedIcon /> */}
               <LocalShippingIcon />
             </Avatar>
