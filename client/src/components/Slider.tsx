@@ -3,22 +3,22 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
 function valuetext(value: number) {
-  return `${value}km`;
+  return `${value}`;
 }
 
 export default function DiscreteSlider() {
   return (
     <Box sx={{ width: 300 }}>
       <Slider
-        aria-label="Temperature"
-        defaultValue={30}
+        aria-label="floor"
+        defaultValue={0}
         getAriaValueText={valuetext}
         valueLabelDisplay="auto"
-        step={40}
+        step={1}
         marks
-        min={10}
-        max={400}
+        min={-4}
+        max={30}
       />
     </Box>
-  )
+  );
 }
