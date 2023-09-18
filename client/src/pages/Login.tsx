@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import GoogleSignIn from "../components/GoogleSignIn";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 export function Login(props: any) {
   return (
@@ -27,10 +29,10 @@ export function Login(props: any) {
     >
       {"Copyright © "}
       <Link color="inherit" href="http://localhost:3000/homepage/">
-        Hovala.com
+      HovalaClick.com 
       </Link>{" "}
       {new Date().getFullYear()}
-      {"."}
+      {"."}<FacebookIcon/><InstagramIcon/>
     </Typography>
   );
 }
@@ -93,7 +95,7 @@ export default function SignInSide() {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 8,
+              my: 3,
               mx: 4,
               display: "flex",
               flexDirection: "column",
@@ -166,6 +168,17 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
               </Grid>
+              <Grid item>
+              <Button
+                onClick={()=>navigate("/")}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                color="secondary"
+              >
+                Back to home page
+              </Button>
+                </Grid>
               <Login sx={{ mt: 5 }} />
             </Box>
           </Box>

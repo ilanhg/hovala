@@ -17,6 +17,7 @@ import { AuthContext } from '../context/authContext';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import axios from 'axios';
 
+
   
 const pages: string[] = [ 'About'];
 const settings: string[] = ['Profile', 'Account', 'Statistics', 'Logout'];
@@ -75,7 +76,12 @@ function ResponsiveAppBar() {
         navigate('/Statistics')
         break;
       case 'Logout':
-        navigate('/login')
+        const logout = () => { 
+          window.localStorage.removeItem("accessToken");
+          window.localStorage.removeItem("refreshToken");
+          alert('logged out')
+          navigate("/login");
+                }
         break;
       default:
         break;

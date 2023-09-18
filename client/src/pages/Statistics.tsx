@@ -41,7 +41,7 @@ function Copyright(props: any) {
       >
         {"Copyright © "}
         <Link color="inherit" href="https://mui.com/">
-          Hovala.com
+        HovalaClick.com
         </Link>{" "}
         {new Date().getFullYear()}
         {"."}
