@@ -18,7 +18,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import axios from 'axios';
 
   
-const pages: string[] = ['Products', 'Pricing', 'About'];
+const pages: string[] = [ 'About'];
 const settings: string[] = ['Profile', 'Account', 'Statistics', 'Logout'];
 
 
@@ -83,24 +83,6 @@ function ResponsiveAppBar() {
     handleCloseUserMenu();
   };
   
-  const [user, setUser] = React.useState("");
-
-  // React.useEffect(() => {
-  //   const users = axios.get('http://localhost:4000/register').then((response) => {
-  //     setuser(response.data);
-  //     console.log(user)
-  //   });
-  // }, []);
-//   const loactionData = async(search: any)=>{
-//     try{
-//     const {data} = await axios.post(`http://localhost:4000/api/homepage`)
-//     setUser(data)
-//     console.log(user);
-    
-//     }catch{ 
-//       console.error('Error')
-//   }
-// }
 
   return (
     <AppBar position="static">

@@ -1,4 +1,4 @@
-import  React, { useState } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -13,166 +13,152 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Paper, Radio, SelectChangeEvent} from '@mui/material';
+import { Paper, Radio, SelectChangeEvent } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faElevator } from '@fortawesome/free-solid-svg-icons';
-import  Slider  from '../components/Slider'
+import { faElevator, faStairs } from '@fortawesome/free-solid-svg-icons';
+import Slider from '../components/Slider'
+import CardHovala from '../components/CardHovala';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SelectFurniture() {
-
-    const [FloorsFrom, setFloorsFrom] =useState("");
-    const [FloorsTo, setFloorsTo] = useState("");
+   
+    const navigate= useNavigate();
     const [selectedValueFrom, setSelectedValueFrom] = useState("yes");
     const [selectedValueTo, setSelectedValueTo] = useState("yes");
 
-    const handleChangeFloorsFrom = (event: SelectChangeEvent) => {
-        setFloorsFrom(event.target.value as string);
-      };
-      const handleChangeFloorsTo = (event: SelectChangeEvent) => {
-        setFloorsTo(event.target.value as string);
-      };
-      const handleChangeRadioFrom = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeRadioFrom = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedValueFrom(event.target.value);
-      };
-      const handleChangeRadioTo = (event: React.ChangeEvent<HTMLInputElement>) => {
+    };
+    const handleChangeRadioTo = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedValueTo(event.target.value);
-      };
-    
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <main>
-        {/* Hero unit */}
-        <Toolbar />
-          <Container maxWidth="lg" >
-          <Grid container spacing={2} alignItems= "center" justifyContent="start" >
-              <Grid item xs={12} md={6} lg={6}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'inline-block',
-                    flexDirection: 'row',
-                    height: 240,
-                  }}  
-                >
-                    <h2>From</h2>
-                    <div style={{display:"flex"}}>
-                     <h3>Elevator</h3>   
-          <FontAwesomeIcon
-            icon={faElevator}
-            size="2xl"
-            style={{ color: "#4e1f51" , marginLeft: "20px", marginRight: "20px" , }}
-          />
-          <h6>yes</h6>
-          <Radio 
-            checked={selectedValueFrom === "yes"}
-            onChange={handleChangeRadioFrom}
-            value="yes"
-            name="radio-buttons"
-            inputProps={{ "aria-label": "yes" }}
-            style={{display:"flex"}}
-          />
-          <h6>No</h6>
-          <Radio
-            checked={selectedValueFrom === "no"}
-            onChange={handleChangeRadioFrom}
-            value="no"
-            name="radio-buttons"
-            inputProps={{ "aria-label": "no" }}
-            
-          />
-        </div>
-        <div style={{display:"flex"}}>
-          <h3>Floor</h3> 
-           <Slider/>
-           </div>
-                </Paper>
-                
-              </Grid >
-              </Grid >
-              
-            
-{/*              
-            <Stack
+    };
+
+    return (
+        <ThemeProvider theme={defaultTheme}>
+            <main>
+                <Container sx={{ py: 4 }} maxWidth="md"  >
+                    <Grid container spacing={2}  >
+                        <Grid item xs={12} md={6} lg={6}>
+                            <Paper
+                                sx={{
+                                    p: 2,
+                                    // display: 'inline-block',
+                                    flexDirection: 'row',
+                                    height: 200,
+                                }}
+                            >   <div style={{ display: "flex", marginLeft: "5px" }}>
+                                    <h2 style={{ marginRight: "20px" }}>From:</h2>
+                                    <h2 style={{ marginRight: "20px" }}>Date:</h2>
+                                    <h2 style={{ marginRight: "20px" }}>Time:</h2>
+                                </div>
+                                <div style={{ display: "flex" }}>
+                                    <h3  >Floor</h3>
+                                    <FontAwesomeIcon
+                                        icon={faStairs}
+                                        size="2xl"
+                                        style={{ color: "#511f31", marginLeft: "7px", marginTop: "15px" }}
+                                    />
+                                </div>
+                                <Slider />
+                                <div style={{ display: "flex" }}>
+                                    <h3 style={{ marginTop: "3px" }}>Elevator</h3>
+                                    <FontAwesomeIcon
+                                        icon={faElevator}
+                                        size="2xl"
+                                        style={{ color: "#4e1f51", marginLeft: "20px", marginRight: "20px", }}
+                                    />
+                                    <h5 style={{ marginTop: "10px" }}>Yes</h5>
+                                    <Radio
+                                        checked={selectedValueFrom === "yes"}
+                                        onChange={handleChangeRadioFrom}
+                                        value="yes"
+                                        name="radio-buttons"
+                                        inputProps={{ "aria-label": "yes" }}
+                                        style={{ display: "flex", marginBottom: "40px" }}
+                                    />
+                                    <h5 style={{ marginTop: "10px" }}  >No</h5>
+                                    <Radio
+                                        checked={selectedValueFrom === "no"}
+                                        onChange={handleChangeRadioFrom}
+                                        value="no"
+                                        name="radio-buttons"
+                                        inputProps={{ "aria-label": "no" }}
+                                        style={{ marginBottom: "40px" }}
+                                    />
+                                </div>
+                            </Paper>
+                        </Grid >
+                        <Grid item xs={12} md={6} lg={6}>
+                            <Paper
+                                sx={{
+                                    p: 2,
+                                    // display: 'inline-block',
+                                    flexDirection: 'row',
+                                    height: 200,
+                                }}
+                            >
+<div style={{ display: "flex", marginLeft: "5px" }}>
+                                    <h2 style={{ marginRight: "20px" }}>To:</h2>
+                                    <h2 style={{ marginRight: "20px" }}>Date:</h2>
+                                    <h2 style={{ marginRight: "20px" }}>Time:</h2>
+                                </div>
+                                <div style={{ display: "flex" }}>
+                                    <h3  >Floor</h3>
+                                    <FontAwesomeIcon
+                                        icon={faStairs}
+                                        size="2xl"
+                                        style={{ color: "#511f31", marginLeft: "7px", marginTop: "15px" }}
+                                    />
+                                </div>
+                                <Slider />
+                                <div style={{ display: "flex" }}>
+                                    <h3 style={{ marginTop: "3px" }}>Elevator</h3>
+                                    <FontAwesomeIcon
+                                        icon={faElevator}
+                                        size="2xl"
+                                        style={{ color: "#4e1f51", marginLeft: "20px", marginRight: "20px", }}
+                                    />
+                                    <h5 style={{ marginTop: "10px" }}>Yes</h5>
+                                    <Radio
+                                        checked={selectedValueTo === "yes"}
+                                        onChange={handleChangeRadioTo}
+                                        value="yes"
+                                        name="radio-buttons"
+                                        inputProps={{ "aria-label": "yes" }}
+                                        style={{ display: "flex", marginBottom: "40px" }}
+                                    />
+                                    <h5 style={{ marginTop: "10px" }}  >No</h5>
+                                    <Radio
+                                        checked={selectedValueTo === "no"}
+                                        onChange={handleChangeRadioTo}
+                                        value="no"
+                                        name="radio-buttons"
+                                        inputProps={{ "aria-label": "no" }}
+                                        style={{ marginBottom: "40px" }}
+                                    />
+                                </div>
+                            </Paper>
+                        </Grid >
+                    </Grid >
+
+                </Container>
+                <Container maxWidth="md">
+                     <CardHovala/>
+                </Container>
+                <Stack
               sx={{ pt: 4 }}
+              position="fixed"
+              bottom=" 20px"
+              right= "5px"
               direction="row"
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-            </Stack> */}
-          </Container>
-     
-        <Container sx={{ py: 8 }} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="div"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random?wallpapers"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </main>
-      {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </Box>
-      {/* End footer */}
-    </ThemeProvider>
-  );
+              <Button variant="contained" onClick={()=>navigate("/selectCompany")}>Select moving company</Button>
+            </Stack>
+            </main>
+        </ThemeProvider>
+    );
 }
