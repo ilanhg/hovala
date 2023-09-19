@@ -17,19 +17,10 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Footer from "../components/Footer";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        HovalaClick.com
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-const defaultTheme = createTheme();
+
+const defaultTheme = createTheme({typography: {
+  fontFamily: 'Raleway',
+},});
 
 export default function Album() {
   return (
@@ -153,7 +144,6 @@ export default function Album() {
           </Container>
         </Box>
       </main>
-        <Footer/>
     </ThemeProvider>
   );
 }

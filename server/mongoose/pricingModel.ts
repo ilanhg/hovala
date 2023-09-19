@@ -20,6 +20,10 @@ const pricingSchema = new Schema({
     distance:{
         type:String,
         required: true
+    },
+    date:{
+        type:Date,
+        required:true
     }
 })
 
