@@ -2,6 +2,7 @@ import React from 'react'
 import PickerDateAndTime from '../components/PickerDateAndTime'
 import  { Container, Toolbar}  from '@mui/material'
 
+
 export interface HomePageProps {
   propsHome:{
     setFloorsFrom: Function,
@@ -13,6 +14,11 @@ export interface HomePageProps {
   }
 }
 export default function HomePage({propsHome}: HomePageProps) {
+
+
+export default function HomePage() {
+
+
   return (
     
     <div >
@@ -21,7 +27,9 @@ export default function HomePage({propsHome}: HomePageProps) {
       <img src="https://i.postimg.cc/htv0Hw71/1000-F-227879660-HYaf2vj-He-LLUE49obkwmge-SKh-IJ0k-ECr-removebg-preview.png"   />
     </Container >
       {/* <NavbarImage/> */}
+
       <PickerDateAndTime propsHome={propsHome}/>  
+
   
     </div>
   )

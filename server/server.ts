@@ -184,6 +184,19 @@ app.post("/register", async (req: any, res: any) => {
     res.status(409).send("The user exists, Enter with another email");
   }
 });
+app.post("/account", async (req: any, res: any) => {
+  try{
+  const {items,prices,elevator,floors,distance} = req.body
+
+  const actualUser = new UserModel({
+    items,prices,elevator,floors,distance
+  });
+  await actualUser.save();
+    res.status(200).send("Update Combination");
+  } catch {
+    res.status(409).send("try to enter again");
+  }
+});
 
 app.post('/forgotPass',async(req:any,res:any)=>{
   const email = req.body;

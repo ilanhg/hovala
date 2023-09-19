@@ -1,11 +1,11 @@
 import { Schema, model } from "mongoose";
 
 const pricingSchema = new Schema({
-    item:{
+    items:{
         type: String,
     required: true,
     },
-    price:{
+    prices:{
         type:Number,
         required:true
     },
