@@ -5,11 +5,11 @@ import  { Container }  from '@mui/material'
 
 export interface HomePageProps {
   propsHome:{
-    setFloorsFrom: Function,
+    setfloorsFrom: Function,
     setFloorsTo: Function,
     setSelectedValueFrom:Function,
     setSelectedValueTo: Function,
-    setfromInfo: Function,
+    setFromInfo: Function,
     setToInfo: Function,
   }
 }

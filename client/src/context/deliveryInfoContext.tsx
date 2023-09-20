@@ -5,8 +5,8 @@ type DeliveryInfo = {
   toFloors: string;
   fromElevator: string;
   toElevator: string;
-  fromInfo: Array<any>;
-  toInfo:  Array<any>;
+  fromInfo: string;
+  toInfo:  string;
 };
 
 export const DeliveryInfoContext = createContext<DeliveryInfo>({
@@ -14,6 +14,6 @@ export const DeliveryInfoContext = createContext<DeliveryInfo>({
     toFloors: "",
     fromElevator:"",
     toElevator:"",
-    fromInfo:[],
-    toInfo:[]
+    fromInfo:"",
+    toInfo:""
 });

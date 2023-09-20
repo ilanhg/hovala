@@ -20,17 +20,17 @@ import UserInfo from "./pages/UserInfo";
 import { DeliveryInfoContext } from "./context/deliveryInfoContext";
 
 function App() {
-  const [FloorsFrom, setFloorsFrom]: any = useState("");
-  const [FloorsTo, setFloorsTo]: any = useState("");
-  const [selectedValueFrom, setSelectedValueFrom]: any = useState("yes");
-  const [selectedValueTo, setSelectedValueTo]: any = useState("yes");
-  const [fromInfo, setfromInfo]: any = useState([]);
-  const [toInfo, setToInfo]: any = useState([]);
+  const [floorsFrom, setfloorsFrom] = useState("");
+  const [FloorsTo, setFloorsTo] = useState("");
+  const [selectedValueFrom, setSelectedValueFrom] = useState("yes");
+  const [selectedValueTo, setSelectedValueTo] = useState("yes");
+  const [fromInfo, setFromInfo] = useState("");
+  const [toInfo, setToInfo] = useState("");
   return (
     <AuthProvider>
       <DeliveryInfoContext.Provider
         value={{
-          fromfloors: FloorsFrom,
+          fromfloors: floorsFrom,
           toFloors: FloorsTo,
           fromElevator: selectedValueFrom,
           toElevator: selectedValueTo,
@@ -59,11 +59,11 @@ function App() {
                 path="/homepage"
                 element={<HomePage
                     propsHome={{
-                      setFloorsFrom,
+                      setfloorsFrom,
                       setFloorsTo,
                       setSelectedValueFrom,
                       setSelectedValueTo, 
-                      setfromInfo,
+                      setFromInfo,
                       setToInfo
 
                     }}
@@ -108,7 +108,6 @@ function App() {
             </Route>
           </Routes>
         </GoogleOAuthProvider>
-        ;
       </DeliveryInfoContext.Provider>
     </AuthProvider>
   );
