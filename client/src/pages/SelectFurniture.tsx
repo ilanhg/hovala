@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -11,14 +11,16 @@ import { faElevator, faStairs } from '@fortawesome/free-solid-svg-icons';
 import Slider from '../components/Slider'
 import CardHovala from '../components/CardHovala';
 import { useNavigate } from 'react-router-dom';
+import { DeliveryInfoContext } from '../context/deliveryInfoContext';
 
 const defaultTheme = createTheme();
 
 export default function SelectFurniture() {
-   
+    const info = useContext(DeliveryInfoContext)
     const navigate= useNavigate();
     const [selectedValueFrom, setSelectedValueFrom] = useState("yes");
     const [selectedValueTo, setSelectedValueTo] = useState("yes");
+    console.log(info.fromInfo)
 
     const handleChangeRadioFrom = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedValueFrom(event.target.value);
@@ -41,12 +43,10 @@ export default function SelectFurniture() {
                                     height: 200,
                                 }}
                             >   <div style={{ display: "flex", marginLeft: "5px" }}>
-                                    <h2 style={{ marginRight: "20px" }}>From:</h2>
-                                    <h2 style={{ marginRight: "20px" }}>Date:</h2>
-                                    <h2 style={{ marginRight: "20px" }}>Time:</h2>
+                                    <h2 style={{ marginRight: "20px" }}>From: {info.fromInfo}</h2>
                                 </div>
                                 <div style={{ display: "flex" }}>
-                                    <h3  >Floor</h3>
+                                    <h3>Floor:{info.fromfloors}</h3>
                                     <FontAwesomeIcon
                                         icon={faStairs}
                                         size="2xl"
@@ -92,12 +92,10 @@ export default function SelectFurniture() {
                                 }}
                             >
 <div style={{ display: "flex", marginLeft: "5px" }}>
-                                    <h2 style={{ marginRight: "20px" }}>To:</h2>
-                                    <h2 style={{ marginRight: "20px" }}>Date:</h2>
-                                    <h2 style={{ marginRight: "20px" }}>Time:</h2>
+                                    <h2 style={{ marginRight: "20px" }}>To: {info.toInfo}</h2>
                                 </div>
                                 <div style={{ display: "flex" }}>
-                                    <h3  >Floor</h3>
+                                    <h3>Floor: {info.toFloors}</h3>
                                     <FontAwesomeIcon
                                         icon={faStairs}
                                         size="2xl"
@@ -148,7 +146,7 @@ export default function SelectFurniture() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" onClick={()=>navigate("/selectCompany")}>Select moving company</Button>
+              <Button variant="contained" onClick={()=>navigate("/userInfo")}>Select moving company</Button>
             </Stack>
             </main>
         </ThemeProvider>

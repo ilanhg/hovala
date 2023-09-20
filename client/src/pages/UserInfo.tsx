@@ -21,6 +21,7 @@ export default function UserInfo() {
     const info = useContext(DeliveryInfoContext)
     const {fromInfo, toInfo } = info
     console.log(fromInfo)
+    console.log(info)
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

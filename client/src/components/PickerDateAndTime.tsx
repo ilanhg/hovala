@@ -27,17 +27,20 @@ import   dayjs, {Dayjs} from "dayjs";
 
 export default function PickerDateAndTime({
   propsHome: {
-    setFloorsFrom,
+    setfloorsFrom,
     setFloorsTo,
     setSelectedValueFrom,
     setSelectedValueTo,
-    setfromInfo,
+    setFromInfo,
     setToInfo,
   },
 }: HomePageProps): JSX.Element {
   // const ref = useRef<HTMLTextAreaElement>();
   // console.log(propsHome)
   const info = useContext(DeliveryInfoContext)
+  const [result,setResult]=useState()
+  const [from, setFrom] = useState([])
+  const [to, setTo] = useState([])
   const [result,setResult]=useState<Dayjs | null>(dayjs());
   const [time,setTime]=useState<Dayjs | null>(dayjs());
   const {fromfloors, toFloors, fromElevator,toElevator, fromInfo, toInfo } = info
@@ -49,7 +52,7 @@ export default function PickerDateAndTime({
       const { data } = await axios.post(`http://localhost:4000/api/homepage`, {
         search,
       });
-      setfromInfo(data);
+      setFrom(data);
     } catch {
       console.error("Error");
     }
@@ -59,16 +62,19 @@ export default function PickerDateAndTime({
       const { data } = await axios.post(`http://localhost:4000/api/homepage`, {
         search,
       });
-      setToInfo(data);
+      setTo(data);
       //setOptions
     } catch {
       console.error("Error");
     }
   };
- 
-  const handleChangeFloorsFrom = (event: SelectChangeEvent) => {
-    setFloorsFrom(event.target.value as string);
+
+  const handleChange = (event:any) => {
+    setResult(event.target.value);
   };
+  const handleChangefloorsFrom = (event: SelectChangeEvent) => {
+    setfloorsFrom(event.target.value as string);
+
   const handleChangeFloorsTo = (event: SelectChangeEvent) => {
     setFloorsTo(event.target.value as string);
   };
@@ -98,7 +104,7 @@ export default function PickerDateAndTime({
                 noOptionsText="No locations"
                 includeInputInList
                 filterSelectedOptions
-                options={fromInfo.map((result: any) => result.name)}
+                options={from.map((result: any) => result.name)}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -108,7 +114,8 @@ export default function PickerDateAndTime({
                     onChange={(e) =>
                       fromLoactionData(e.target.value.toLowerCase())
                     }
-                    onSelect={()=>{console.log(params.inputProps.value)}
+                    onSelect={()=>{setFromInfo(params.inputProps.value)
+                    console.log(fromInfo)}
                     }
                   />
                   
@@ -117,7 +124,7 @@ export default function PickerDateAndTime({
 
               <Autocomplete
                 noOptionsText="No locations"
-                options={toInfo.map((result: any) => result.name)}
+                options={to.map((result: any) => result.name)}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -126,14 +133,17 @@ export default function PickerDateAndTime({
                     fullWidth
                     onChange={(e) =>
                       toLoactionData(e.target.value.toLowerCase()) }
-                    onSelect={()=>{console.log(params.inputProps.value)}}
+                    onSelect={()=>{setToInfo(params.inputProps.value)
+                    console.log(toInfo)}}
                   />
                 )}
               />
+
               <DatePicker label="Date"  value={result} onChange={(newValue) =>{setResult(newValue); console.log(newValue?.format('DD/MM/YYYY'))} 
               }
               />
               <TimePicker label="Time" ampm={false} value={time} onChange={(newValue) =>{setTime(newValue); console.log(newValue?.format('HH:mm'))}}/>
+
               <Button
                 variant="contained"
                 onClick={() => navigate("/SelectFurniture")}
@@ -141,7 +151,7 @@ export default function PickerDateAndTime({
                 Let's go!
               </Button>
             </DemoContainer>
-            <Container
+            {/* <Container
               sx={{
                 display: { xs: "none", md: "flex" },
                 justifyContent: "start",
@@ -202,8 +212,8 @@ export default function PickerDateAndTime({
                 name="radio-buttons"
                 inputProps={{ "aria-label": "no" }}
               />
-            </Container>
-            <Container
+            </Container> */}
+            {/* <Container
               fixed
               sx={{
                 display: { xs: "none", md: "flex" },
@@ -227,7 +237,7 @@ export default function PickerDateAndTime({
                     value={info.fromfloors}
                     label="Floors"
                     placeholder="Floors"
-                    onChange={handleChangeFloorsFrom}
+                    onChange={handleChangefloorsFrom}
                   >
                     <MenuItem value={0}>0</MenuItem>
                     <MenuItem value={1}>1</MenuItem>
@@ -271,7 +281,7 @@ export default function PickerDateAndTime({
                   </Select>
                 </FormControl>
               </Box>
-            </Container>
+            </Container> */}
           </LocalizationProvider>
         </Container>
       </>
