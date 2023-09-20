@@ -18,7 +18,6 @@ import AboutUs from "./pages/AboutUs";
 import Footer from "./components/Footer";
 import UserInfo from "./pages/UserInfo";
 import { DeliveryInfoContext } from "./context/deliveryInfoContext";
-// import InfoProvider from "./context/deliveryInfoContext";
 
 function App() {
   const [FloorsFrom, setFloorsFrom]: any = useState("");
