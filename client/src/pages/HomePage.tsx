@@ -15,10 +15,6 @@ export interface HomePageProps {
 }
 export default function HomePage({propsHome}: HomePageProps) {
 
-
-export default function HomePage() {
-
-
   return (
     
     <div >

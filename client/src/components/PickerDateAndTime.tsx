@@ -24,7 +24,6 @@ import {
 } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import axios from "axios";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useNavigate } from "react-router-dom";
 import { HomePageProps } from "../pages/HomePage";
 import { DeliveryInfoContext } from "../context/deliveryInfoContext";
@@ -42,6 +41,7 @@ export default function PickerDateAndTime({
   // const ref = useRef<HTMLTextAreaElement>();
   // console.log(propsHome)
   const info = useContext(DeliveryInfoContext)
+  const [result,setResult]=useState()
   const {fromfloors, toFloors, fromElevator,toElevator, fromInfo, toInfo } = info
   // console.log(info)
   const navigate = useNavigate();
@@ -67,7 +67,9 @@ export default function PickerDateAndTime({
       console.error("Error");
     }
   };
-
+  const handleChange = (event:any) => {
+    setResult(event.target.value);
+  };
   const handleChangeFloorsFrom = (event: SelectChangeEvent) => {
     setFloorsFrom(event.target.value as string);
   };
@@ -110,13 +112,16 @@ export default function PickerDateAndTime({
                     onChange={(e) =>
                       fromLoactionData(e.target.value.toLowerCase())
                     }
+                    onSelect={()=>{console.log(params.inputProps.value)}
+                    }
                   />
+                  
                 )}
               />
 
               <Autocomplete
                 noOptionsText="No locations"
-                options={[]}
+                options={toInfo.map((result: any) => result.name)}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -124,15 +129,12 @@ export default function PickerDateAndTime({
                     variant="outlined"
                     fullWidth
                     onChange={(e) =>
-                      toLoactionData(e.target.value.toLowerCase())
-                    }
-                    onClick={(e)=>{
-                      console.log(e.target);
-                    }}
+                      toLoactionData(e.target.value.toLowerCase()) }
+                    onSelect={()=>{console.log(params.inputProps.value)}}
                   />
                 )}
               />
-              <DatePicker label="Date" />
+              <DatePicker label="Date" value={result} onChange={(e) => {console.log(result)}}/>;
               <TimePicker label="Time" />
               <Button
                 variant="contained"
