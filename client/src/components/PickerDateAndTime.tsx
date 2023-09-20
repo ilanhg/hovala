@@ -22,6 +22,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { HomePageProps } from "../pages/HomePage";
 import { DeliveryInfoContext } from "../context/deliveryInfoContext";
+import   dayjs, {Dayjs} from "dayjs";
+
 
 export default function PickerDateAndTime({
   propsHome: {
@@ -36,7 +38,8 @@ export default function PickerDateAndTime({
   // const ref = useRef<HTMLTextAreaElement>();
   // console.log(propsHome)
   const info = useContext(DeliveryInfoContext)
-  const [result,setResult]=useState()
+  const [result,setResult]=useState<Dayjs | null>(dayjs());
+  const [time,setTime]=useState<Dayjs | null>(dayjs());
   const {fromfloors, toFloors, fromElevator,toElevator, fromInfo, toInfo } = info
   // console.log(info)
   const navigate = useNavigate();
@@ -62,9 +65,7 @@ export default function PickerDateAndTime({
       console.error("Error");
     }
   };
-  const handleChange = (event:any) => {
-    setResult(event.target.value);
-  };
+ 
   const handleChangeFloorsFrom = (event: SelectChangeEvent) => {
     setFloorsFrom(event.target.value as string);
   };
@@ -129,8 +130,10 @@ export default function PickerDateAndTime({
                   />
                 )}
               />
-              <DatePicker label="Date" value={result} onChange={(e) => {console.log(result)}}/>;
-              <TimePicker label="Time" />
+              <DatePicker label="Date"  value={result} onChange={(newValue) =>{setResult(newValue); console.log(newValue?.format('DD/MM/YYYY'))} 
+              }
+              />
+              <TimePicker label="Time" ampm={false} value={time} onChange={(newValue) =>{setTime(newValue); console.log(newValue?.format('HH:mm'))}}/>
               <Button
                 variant="contained"
                 onClick={() => navigate("/SelectFurniture")}
