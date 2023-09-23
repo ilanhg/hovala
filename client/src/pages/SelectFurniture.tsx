@@ -146,7 +146,7 @@ export default function SelectFurniture() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" onClick={()=>navigate("/userInfo")}>Select moving company</Button>
+              <Button variant="contained" onClick={()=>navigate("/summary")}>Select moving company</Button>
             </Stack>
             </main>
         </ThemeProvider>

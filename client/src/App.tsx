@@ -16,8 +16,9 @@ import SelectFurniture from "./pages/SelectFurniture";
 import OTP from "./pages/OTP";
 import AboutUs from "./pages/AboutUs";
 import Footer from "./components/Footer";
-import UserInfo from "./pages/UserInfo";
 import { DeliveryInfoContext } from "./context/deliveryInfoContext";
+import Summary from "./pages/Summary";
+import { UserInfoContext } from "./context/UserInfoContext";
 
 function App() {
   const [floorsFrom, setfloorsFrom] = useState("");
@@ -26,6 +27,12 @@ function App() {
   const [selectedValueTo, setSelectedValueTo] = useState("yes");
   const [fromInfo, setFromInfo] = useState("");
   const [toInfo, setToInfo] = useState("");
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   return (
     <AuthProvider>
       <DeliveryInfoContext.Provider
@@ -36,8 +43,18 @@ function App() {
           toElevator: selectedValueTo,
           fromInfo: fromInfo,
           toInfo: toInfo,
+          date: date,
+          time: time,
         }}
       >
+        <UserInfoContext.Provider
+          value={{
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phoneNumber: phoneNumber,
+          }}
+        ></UserInfoContext.Provider>
         <GoogleOAuthProvider clientId="341775163512-3nn5hqta1nro76d0samvcpkutvr9a15o.apps.googleusercontent.com">
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -57,22 +74,36 @@ function App() {
             >
               <Route
                 path="/homepage"
-                element={<HomePage
+                element={
+                  <HomePage
                     propsHome={{
                       setfloorsFrom,
                       setFloorsTo,
                       setSelectedValueFrom,
-                      setSelectedValueTo, 
+                      setSelectedValueTo,
                       setFromInfo,
-                      setToInfo
-
+                      setToInfo,
+                      setDate,
+                      setTime
                     }}
                   />
                 }
               />
               <Route path="SelectFurniture" element={<SelectFurniture />} />
               <Route path="/About" element={<AboutUs />} />
-              <Route path="/userInfo" element={<UserInfo />} />
+              <Route
+                path="/summary"
+                element={
+                  <Summary
+                    propsSummary={{
+                      setFirstName,
+                      setLastName,
+                      setEmail,
+                      setPhoneNumber,
+                    }}
+                  />
+                }
+              />
               <Route
                 path="/profile"
                 element={
