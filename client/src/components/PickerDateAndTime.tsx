@@ -33,17 +33,18 @@ export default function PickerDateAndTime({
     setSelectedValueTo,
     setFromInfo,
     setToInfo,
+    setTime,
+    setDate
   },
 }: HomePageProps): JSX.Element {
   // const ref = useRef<HTMLTextAreaElement>();
   // console.log(propsHome)
   const info = useContext(DeliveryInfoContext)
-  const [result,setResult]=useState()
   const [from, setFrom] = useState([])
   const [to, setTo] = useState([])
   const [result,setResult]=useState<Dayjs | null>(dayjs());
-  const [time,setTime]=useState<Dayjs | null>(dayjs());
-  const {fromfloors, toFloors, fromElevator,toElevator, fromInfo, toInfo } = info
+  const [deliveryTime,setDeliveryTime]=useState<Dayjs | null>(dayjs());
+  const {fromfloors, toFloors, fromElevator,toElevator, fromInfo, toInfo, time, date } = info
   // console.log(info)
   const navigate = useNavigate();
 
@@ -74,7 +75,7 @@ export default function PickerDateAndTime({
   };
   const handleChangefloorsFrom = (event: SelectChangeEvent) => {
     setfloorsFrom(event.target.value as string);
-
+  }
   const handleChangeFloorsTo = (event: SelectChangeEvent) => {
     setFloorsTo(event.target.value as string);
   };
@@ -139,10 +140,10 @@ export default function PickerDateAndTime({
                 )}
               />
 
-              <DatePicker label="Date"  value={result} onChange={(newValue) =>{setResult(newValue); console.log(newValue?.format('DD/MM/YYYY'))} 
+              <DatePicker label="Date"  value={result} onChange={(newValue) =>{setDate(setResult(newValue)); console.log(newValue?.format('DD/MM/YYYY'))} 
               }
               />
-              <TimePicker label="Time" ampm={false} value={time} onChange={(newValue) =>{setTime(newValue); console.log(newValue?.format('HH:mm'))}}/>
+              <TimePicker label="Time" ampm={false} value={deliveryTime} onChange={(newValue) =>{{setTime(setDeliveryTime(newValue)); console.log(newValue?.format('HH:mm'))}}}/>
 
               <Button
                 variant="contained"

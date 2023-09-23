@@ -11,6 +11,8 @@ export interface HomePageProps {
     setSelectedValueTo: Function,
     setFromInfo: Function,
     setToInfo: Function,
+    setDate: Function,
+    setTime: Function
   }
 }
 export default function HomePage({propsHome}: HomePageProps) {
