@@ -175,7 +175,6 @@ app.post("/register", async (req: any, res: any) => {
     lastName,
     email,
     mobileNo,
-    status: "PENDING",
     password: hashedPassword,
   });
   await actualUser.save();

@@ -1,13 +1,13 @@
 import { createContext } from "react";
 
-type  UserInfoProps ={
+type  UserInfo ={
     firstName: string;
     lastName: string;
     email: string;
     phoneNumber: string;
   };
 
-  export const UserInfoContext = createContext<UserInfoProps>({
+  export const UserInfoContext = createContext<UserInfo>({
     firstName: '',
     lastName: '',
     email: '',

@@ -19,16 +19,17 @@ import Footer from "./components/Footer";
 import { DeliveryInfoContext } from "./context/deliveryInfoContext";
 import Summary from "./pages/Summary";
 import { UserInfoContext } from "./context/UserInfoContext";
+import dayjs, { Dayjs } from "dayjs";
 
 function App() {
-  const [floorsFrom, setfloorsFrom] = useState("");
-  const [FloorsTo, setFloorsTo] = useState("");
-  const [selectedValueFrom, setSelectedValueFrom] = useState("yes");
-  const [selectedValueTo, setSelectedValueTo] = useState("yes");
+  const [floorsFrom, setFromFloors] = useState("");
+  const [toFloors, setToFloors] = useState("");
+  const [fromElevator,setElevatorFrom] = useState("yes");
+  const [toElevator, setElevatorTo] = useState("yes");
   const [fromInfo, setFromInfo] = useState("");
   const [toInfo, setToInfo] = useState("");
-  const [time, setTime] = useState("");
-  const [date, setDate] = useState("");
+  const [time, setTime] = useState<Dayjs | null>(dayjs());;
+  const [date, setDate] = useState<Dayjs | null>(dayjs());;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,9 +39,9 @@ function App() {
       <DeliveryInfoContext.Provider
         value={{
           fromfloors: floorsFrom,
-          toFloors: FloorsTo,
-          fromElevator: selectedValueFrom,
-          toElevator: selectedValueTo,
+          toFloors: toFloors,
+          fromElevator: fromElevator,
+          toElevator: toElevator,
           fromInfo: fromInfo,
           toInfo: toInfo,
           date: date,
@@ -54,7 +55,7 @@ function App() {
             email: email,
             phoneNumber: phoneNumber,
           }}
-        ></UserInfoContext.Provider>
+        >
         <GoogleOAuthProvider clientId="341775163512-3nn5hqta1nro76d0samvcpkutvr9a15o.apps.googleusercontent.com">
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -77,10 +78,6 @@ function App() {
                 element={
                   <HomePage
                     propsHome={{
-                      setfloorsFrom,
-                      setFloorsTo,
-                      setSelectedValueFrom,
-                      setSelectedValueTo,
                       setFromInfo,
                       setToInfo,
                       setDate,
@@ -89,7 +86,13 @@ function App() {
                   />
                 }
               />
-              <Route path="SelectFurniture" element={<SelectFurniture />} />
+              <Route path="SelectFurniture" element={<SelectFurniture 
+                  propsFurniture={{
+                  setElevatorFrom,
+                  setElevatorTo,
+                  setFromFloors,
+                  setToFloors,
+                }}/>} />
               <Route path="/About" element={<AboutUs />} />
               <Route
                 path="/summary"
@@ -139,6 +142,7 @@ function App() {
             </Route>
           </Routes>
         </GoogleOAuthProvider>
+        </UserInfoContext.Provider>
       </DeliveryInfoContext.Provider>
     </AuthProvider>
   );

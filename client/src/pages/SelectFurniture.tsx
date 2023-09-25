@@ -5,29 +5,38 @@ import Stack from '@mui/material/Stack';
 
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Paper, Radio, SelectChangeEvent } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faElevator, faStairs } from '@fortawesome/free-solid-svg-icons';
-import Slider from '../components/Slider'
+import { Paper,} from '@mui/material';
+import SliderTo from '../components/SliderTo';
 import CardHovala from '../components/CardHovala';
 import { useNavigate } from 'react-router-dom';
 import { DeliveryInfoContext } from '../context/deliveryInfoContext';
+import SliderFrom from '../components/SliderFrom';
+import ElevatorFrom from '../components/ElevatorFrom';
+import ElevatorTo from '../components/ElevatorTo';
+
+
+export interface FurnitureProps {
+    propsFurniture:{
+     setElevatorFrom:Function,
+      setElevatorTo: Function,
+      setFromFloors: Function,
+      setToFloors:Function,
+    }
+  }
 
 const defaultTheme = createTheme();
 
-export default function SelectFurniture() {
+export default function SelectFurniture({propsFurniture
+}: FurnitureProps): JSX.Element {
+
     const info = useContext(DeliveryInfoContext)
     const navigate= useNavigate();
-    const [selectedValueFrom, setSelectedValueFrom] = useState("yes");
-    const [selectedValueTo, setSelectedValueTo] = useState("yes");
-    console.log(info.fromInfo)
+    // const [elevatorFrom, setElevatorFrom] = useState("yes");
+    // const [elevatorTo, setElevatorTo] = useState("yes");
+    // console.log(info.fromInfo)
 
-    const handleChangeRadioFrom = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValueFrom(event.target.value);
-    };
-    const handleChangeRadioTo = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValueTo(event.target.value);
-    };
+
+
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -45,42 +54,9 @@ export default function SelectFurniture() {
                             >   <div style={{ display: "flex", marginLeft: "5px" }}>
                                     <h2 style={{ marginRight: "20px" }}>From: {info.fromInfo}</h2>
                                 </div>
-                                <div style={{ display: "flex" }}>
-                                    <h3>Floor:{info.fromfloors}</h3>
-                                    <FontAwesomeIcon
-                                        icon={faStairs}
-                                        size="2xl"
-                                        style={{ color: "#511f31", marginLeft: "7px", marginTop: "15px" }}
-                                    />
-                                </div>
-                                <Slider />
-                                <div style={{ display: "flex" }}>
-                                    <h3 style={{ marginTop: "3px" }}>Elevator</h3>
-                                    <FontAwesomeIcon
-                                        icon={faElevator}
-                                        size="2xl"
-                                        style={{ color: "#4e1f51", marginLeft: "20px", marginRight: "20px", }}
-                                    />
-                                    <h5 style={{ marginTop: "10px" }}>Yes</h5>
-                                    <Radio
-                                        checked={selectedValueFrom === "yes"}
-                                        onChange={handleChangeRadioFrom}
-                                        value="yes"
-                                        name="radio-buttons"
-                                        inputProps={{ "aria-label": "yes" }}
-                                        style={{ display: "flex", marginBottom: "40px" }}
-                                    />
-                                    <h5 style={{ marginTop: "10px" }}  >No</h5>
-                                    <Radio
-                                        checked={selectedValueFrom === "no"}
-                                        onChange={handleChangeRadioFrom}
-                                        value="no"
-                                        name="radio-buttons"
-                                        inputProps={{ "aria-label": "no" }}
-                                        style={{ marginBottom: "40px" }}
-                                    />
-                                </div>
-                            </Paper>
+                                <SliderFrom propsFurniture={propsFurniture}  />
+                             <ElevatorFrom propsFurniture={propsFurniture}/>
+                             </Paper>
                         </Grid >
                         <Grid item xs={12} md={6} lg={6}>
                             <Paper
@@ -94,41 +70,8 @@ export default function SelectFurniture() {
 <div style={{ display: "flex", marginLeft: "5px" }}>
                                     <h2 style={{ marginRight: "20px" }}>To: {info.toInfo}</h2>
                                 </div>
-                                <div style={{ display: "flex" }}>
-                                    <h3>Floor: {info.toFloors}</h3>
-                                    <FontAwesomeIcon
-                                        icon={faStairs}
-                                        size="2xl"
-                                        style={{ color: "#511f31", marginLeft: "7px", marginTop: "15px" }}
-                                    />
-                                </div>
-                                <Slider />
-                                <div style={{ display: "flex" }}>
-                                    <h3 style={{ marginTop: "3px" }}>Elevator</h3>
-                                    <FontAwesomeIcon
-                                        icon={faElevator}
-                                        size="2xl"
-                                        style={{ color: "#4e1f51", marginLeft: "20px", marginRight: "20px", }}
-                                    />
-                                    <h5 style={{ marginTop: "10px" }}>Yes</h5>
-                                    <Radio
-                                        checked={selectedValueTo === "yes"}
-                                        onChange={handleChangeRadioTo}
-                                        value="yes"
-                                        name="radio-buttons"
-                                        inputProps={{ "aria-label": "yes" }}
-                                        style={{ display: "flex", marginBottom: "40px" }}
-                                    />
-                                    <h5 style={{ marginTop: "10px" }}  >No</h5>
-                                    <Radio
-                                        checked={selectedValueTo === "no"}
-                                        onChange={handleChangeRadioTo}
-                                        value="no"
-                                        name="radio-buttons"
-                                        inputProps={{ "aria-label": "no" }}
-                                        style={{ marginBottom: "40px" }}
-                                    />
-                                </div>
+                                <SliderTo propsFurniture={propsFurniture}/>
+                               <ElevatorTo propsFurniture={propsFurniture}/>
                             </Paper>
                         </Grid >
                     </Grid >

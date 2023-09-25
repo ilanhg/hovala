@@ -31,7 +31,7 @@ export default function Summary({propsSummary}:SummaryProps) {
       case 0:
         return <UserDetials propsSummary={propsSummary} />;
       case 1:
-        return <OrderReview propsSummary={propsSummary}/>;
+        return <OrderReview />;
       default:
         throw new Error('Unknown step');
     }

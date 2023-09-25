@@ -33,13 +33,7 @@ const products = [
   { name: 'Shipping', desc: '', price: 'Free' },
 ];
 
-export default function OrderReview({
-  propsSummary:{
-    setFirstName,
-    setLastName,
-    setEmail,
-    setPhoneNumber
-},}:SummaryProps):JSX.Element {
+export default function OrderReview(){
   const deliveryInfo = useContext(DeliveryInfoContext);
 const{fromfloors,toFloors,fromElevator,toElevator,fromInfo,toInfo,date,time}= deliveryInfo;
 const userInfo = useContext(UserInfoContext);
@@ -68,7 +62,7 @@ const{firstName,lastName,email, phoneNumber} = userInfo;
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          <Typography gutterBottom>Name:{firstName}' '{lastName}</Typography>
+          <Typography gutterBottom>Name:{firstName} {lastName}</Typography>
           <Typography gutterBottom>email:{email}</Typography>
           <Typography gutterBottom>Phone Number:{phoneNumber}</Typography>
         </Grid>

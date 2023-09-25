@@ -1,3 +1,4 @@
+import { time } from "console";
 import { createContext } from "react";
 
 type DeliveryInfo = {
@@ -8,8 +9,8 @@ fromfloors: string;
   toElevator: string;
   fromInfo: string;
   toInfo:  string;
-  date: string;
-  time: string;
+  date: any;
+  time: any;
 };
 
 export const DeliveryInfoContext = createContext<DeliveryInfo>({

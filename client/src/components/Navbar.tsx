@@ -76,13 +76,11 @@ function ResponsiveAppBar() {
         navigate('/Statistics')
         break;
       case 'Logout':
-        const logout = () => { 
           window.localStorage.removeItem("accessToken");
           window.localStorage.removeItem("refreshToken");
           alert('logged out')
-          navigate("/login");
-                }
-        break;
+          navigate('/login');  
+          return window.location.reload()   
       default:
         break;
     }

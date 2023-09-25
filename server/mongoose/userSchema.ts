@@ -33,10 +33,6 @@ const UserSchema = new Schema({
     required: true,
     trim: true,
   },
-  status: {
-        type: String,
-        required: true,
-    },
 
 });
 

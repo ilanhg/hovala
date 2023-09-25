@@ -17,6 +17,8 @@ import GoogleSignIn from "../components/GoogleSignIn";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import {set, useForm} from "react-hook-form"
+import { FormControl, useFormControlContext } from '@mui/base/FormControl';
 
 export function Login(props: any) {
   return (
@@ -42,7 +44,12 @@ const defaultTheme = createTheme();
 export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [mobileNo, setMobileNo] = useState("");
+  const{
+    handleSubmit,
+    getValues,
+    register,
+    formState:{errors}
+  }=useForm()
   const navigate = useNavigate();
   
   const getOnChange = (setFunc: (newValue: string) => void) => {
@@ -53,10 +60,11 @@ export default function SignInSide() {
   };
 
   const login = async () => {
+    
     const response = await axiosClient.post("http://localhost:4000/login", {
       email,
       password,
-      mobileNo
+      // mobileNo
     });
     if (response.status === 200) {
       const accessToken = response?.data?.accessToken;
@@ -65,11 +73,13 @@ export default function SignInSide() {
       window.localStorage.setItem('refreshToken', refreshToken);
       navigate("/");
       return window.location.reload()
+ 
     } else {
+      console.log("username or password is incorrect");
       alert("username or password is incorrect");
     }
-  };
 
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -91,6 +101,7 @@ export default function SignInSide() {
             backgroundPosition: "center",
           }}
         />
+         
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -108,11 +119,14 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+            
+            <Box component="form" onSubmit={handleSubmit(login)} noValidate sx={{ mt: 1 }}>
+            <FormControl defaultValue="" required>
               <TextField
-                onChange={getOnChange(setEmail)}
+                // onChange={getOnChange(setEmail)}
+                {...register("email",{required:true})}
+                aria-invalid={errors.email ? "true" : "false"}
                 margin="normal"
-                required
                 fullWidth
                 id="email"
                 label="Email Address"
@@ -120,8 +134,14 @@ export default function SignInSide() {
                 autoComplete="email"
                 autoFocus
               />
+              {errors.email?.type === "required" && (
+              <span  role="alert">Email is required</span>
+      )}
+                </FormControl>
               <TextField
-                onChange={getOnChange(setPassword)}
+                // onChange={getOnChange(setPassword)}
+                {...register("password",{required:"this is required"})}
+                aria-invalid={errors.password ? "true" : "false"}
                 margin="normal"
                 required
                 fullWidth
@@ -131,7 +151,10 @@ export default function SignInSide() {
                 id="password"
                 autoComplete="current-password"
               />
-                    <TextField
+               {errors.password?.type === "required" && (
+        <span role="alert">Password is required</span>
+      )}
+                    {/* <TextField
                 onChange={getOnChange(setMobileNo)}
                 margin="normal"
                 required
@@ -141,19 +164,21 @@ export default function SignInSide() {
                 name="MobileNo"
                 autoComplete="MobileNo"
                 autoFocus
-              />
+              /> */}
+              <div>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-              />
+              /></div>
               <Button
-                onClick={login}
+                type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign In
               </Button>
+              
               <GoogleSignIn/>
               <Grid container>
                 <Grid item xs>
@@ -180,9 +205,12 @@ export default function SignInSide() {
                 </Grid>
               <Login sx={{ mt: 5 }} />
             </Box>
+          
           </Box>
         </Grid>
       </Grid>
+      
     </ThemeProvider>
+    
   );
 }

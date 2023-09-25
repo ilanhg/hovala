@@ -40,6 +40,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
+ 
   const navigate = useNavigate();
 
   const getOnChange = (setFunc: (newValue: string) => void) => {
@@ -50,7 +51,6 @@ export default function SignUp() {
   };
 
   const register = async () => {
-    // debugger;
     const response = await axiosClient.post("http://localhost:4000/register", {
       firstName,
       lastName,
@@ -58,7 +58,6 @@ export default function SignUp() {
       mobileNo,
       password,
     });
-    // debugger;
     if (response.status === 200) {
       navigate("/login");
     } else {
@@ -83,14 +82,15 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" onSubmit={register} noValidate sx={{ mt: 3 }}>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   onChange={getOnChange(setFirstName)}
                   autoComplete="given-name"
                   name="firstName"
-                  required
+                  required={true}
+                  value={firstName}
                   fullWidth
                   id="firstName"
                   label="First Name"
@@ -101,7 +101,7 @@ export default function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   onChange={getOnChange(setLastName)}
-                  required
+                  required={true}
                   fullWidth
                   id="lastName"
                   label="Last Name"
@@ -113,7 +113,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   onChange={getOnChange(setEmail)}
-                  required
+                  required= {true}
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -127,7 +127,7 @@ export default function SignUp() {
                   onChange={getOnChange( setMobileNo)}
                   autoComplete="given-name"
                   name="MobileNo"
-                  required
+                  required ={true}
                   fullWidth
                   id="MobileNo"
                   label="MobileNo"
@@ -138,7 +138,7 @@ export default function SignUp() {
                <Grid item xs={12}>
                 <TextField
                   onChange={getOnChange(setPassword)}
-                  required
+                  required ={true}
                   fullWidth
                   name="password"
                   label="Password"
@@ -148,7 +148,7 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button 
+            <Button onClick={register}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
