@@ -17,8 +17,13 @@ import GoogleSignIn from "../components/GoogleSignIn";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import {set, useForm} from "react-hook-form"
-import { FormControl, useFormControlContext } from '@mui/base/FormControl';
+import { useForm} from "react-hook-form"
+import { FormControl } from '@mui/base/FormControl';
+
+type Formvalues={
+  email:string;
+  password:string
+}
 
 export function Login(props: any) {
   return (
@@ -44,12 +49,7 @@ const defaultTheme = createTheme();
 export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const{
-    handleSubmit,
-    getValues,
-    register,
-    formState:{errors}
-  }=useForm()
+  
   const navigate = useNavigate();
   
   const getOnChange = (setFunc: (newValue: string) => void) => {
@@ -58,12 +58,23 @@ export default function SignInSide() {
     };
     return handleOnChange;
   };
+const form  = useForm<Formvalues>({
+  defaultValues:{
+    email:'',
+    password:''
+  }
+  
+})
+const{
+  handleSubmit,
+}=form
 
   const login = async () => {
+
     
-    const response = await axiosClient.post("http://localhost:4000/login", {
+    const response = await axiosClient.post("http://localhost:4000/login",{
       email,
-      password,
+      password
       // mobileNo
     });
     if (response.status === 200) {
@@ -71,7 +82,7 @@ export default function SignInSide() {
       const refreshToken = response?.data?.refreshToken;
       window.localStorage.setItem('accessToken', accessToken);
       window.localStorage.setItem('refreshToken', refreshToken);
-      navigate("/");
+      navigate("/homepage");
       return window.location.reload()
  
     } else {
@@ -120,12 +131,9 @@ export default function SignInSide() {
               Sign in
             </Typography>
             
-            <Box component="form" onSubmit={handleSubmit(login)} noValidate sx={{ mt: 1 }}>
-            <FormControl defaultValue="" required>
+            <Box component="form" onSubmit={handleSubmit(login)} sx={{ mt: 1 }}>
               <TextField
-                // onChange={getOnChange(setEmail)}
-                {...register("email",{required:true})}
-                aria-invalid={errors.email ? "true" : "false"}
+                onChange={getOnChange(setEmail)}
                 margin="normal"
                 fullWidth
                 id="email"
@@ -133,15 +141,11 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                type="email"
               />
-              {errors.email?.type === "required" && (
-              <span  role="alert">Email is required</span>
-      )}
-                </FormControl>
               <TextField
-                // onChange={getOnChange(setPassword)}
-                {...register("password",{required:"this is required"})}
-                aria-invalid={errors.password ? "true" : "false"}
+                
+                onChange={getOnChange(setPassword)}
                 margin="normal"
                 required
                 fullWidth
@@ -151,20 +155,7 @@ export default function SignInSide() {
                 id="password"
                 autoComplete="current-password"
               />
-               {errors.password?.type === "required" && (
-        <span role="alert">Password is required</span>
-      )}
-                    {/* <TextField
-                onChange={getOnChange(setMobileNo)}
-                margin="normal"
-                required
-                fullWidth
-                id="MobileNo"
-                label="MobileNo"
-                name="MobileNo"
-                autoComplete="MobileNo"
-                autoFocus
-              /> */}
+               
               <div>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

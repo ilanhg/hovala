@@ -12,24 +12,16 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axiosClient from "../promise/apiClient";
+import { useForm } from "react-hook-form";
+import { FormControl } from "@mui/base/FormControl";
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Hovala.com
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+type Formvalues = {
+  firstName: string;
+  lastName: string;
+  MobileNo: string;
+  email: string;
+  password: string;
+};
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -40,7 +32,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
- 
+
   const navigate = useNavigate();
 
   const getOnChange = (setFunc: (newValue: string) => void) => {
@@ -49,8 +41,17 @@ export default function SignUp() {
     };
     return handleOnChange;
   };
-
-  const register = async () => {
+  const form = useForm<Formvalues>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      MobileNo: "",
+      password: "",
+    },
+  });
+  const { handleSubmit } = form;
+  const onRegister = async () => {
     const response = await axiosClient.post("http://localhost:4000/register", {
       firstName,
       lastName,
@@ -82,7 +83,11 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            sx={{ mt: 3 }}
+            onSubmit={handleSubmit(onRegister)}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -113,7 +118,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   onChange={getOnChange(setEmail)}
-                  required= {true}
+                  required={true}
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -122,23 +127,23 @@ export default function SignUp() {
                   type="email"
                 />
               </Grid>
-              <Grid item xs={12} >
-              <TextField
-                  onChange={getOnChange( setMobileNo)}
+              <Grid item xs={12}>
+                <TextField
+                  onChange={getOnChange(setMobileNo)}
                   autoComplete="given-name"
                   name="MobileNo"
-                  required ={true}
+                  required={true}
                   fullWidth
                   id="MobileNo"
                   label="MobileNo"
                   type="number"
                   autoFocus
-                /> 
-               </Grid>
-               <Grid item xs={12}>
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
                   onChange={getOnChange(setPassword)}
-                  required ={true}
+                  required={true}
                   fullWidth
                   name="password"
                   label="Password"
@@ -148,7 +153,8 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button onClick={register}
+            <Button
+              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -164,7 +170,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

@@ -11,7 +11,15 @@ import Typography from '@mui/material/Typography';
 import UserDetials from '../components/UserDetails';
 import OrderReview from '../components/OrderReview';
 import { DeliveryInfoContext } from '../context/deliveryInfoContext';
+import { useForm } from "react-hook-form";
+import { FormControl } from "@mui/base/FormControl";
 
+type Formvalues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  MobileNo: string;
+};
 export interface SummaryProps{
   propsSummary:{
     setFirstName : Function,
@@ -37,23 +45,11 @@ export default function Summary({propsSummary}:SummaryProps) {
     }
   }
   const info = useContext(DeliveryInfoContext)
-  const {fromInfo, toInfo } = info
+  const {fromInfo, toInfo, date } = info
   console.log(fromInfo)
   console.log(info)
-const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  console.log({
-    email: data.get('email'),
-    phoneNumber: data.get('phone-number'),
-  })}
   const [activeStep, setActiveStep] = useState(0);
-  // const [firstName,setFirstName] = useState('');
-  // const [lastName,setLastName] = useState('');
-  // const [email,setEmail] = useState('');
-  // const [phoneNumber,setPhoneNumber] = useState('');
-
-
+  
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -61,12 +57,20 @@ const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  const form = useForm<Formvalues>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      MobileNo: "",
+    },
+  });
+  const { handleSubmit } = form;
   return (
     <>
       <CssBaseline />
      
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container component="form" maxWidth="sm" onSubmit={handleSubmit(handleNext)} sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
             Checkout
@@ -76,7 +80,7 @@ const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
           </Typography><Typography component="h1" variant="h5">
             To:{toInfo}
           </Typography><Typography component="h1" variant="h5">
-            Delivery Date:{}
+            Delivery Date:{date}
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
@@ -105,8 +109,9 @@ const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
                   </Button>
                 )}
                 <Button
+                type='submit'
                   variant="contained"
-                  onClick={handleNext}
+                  // onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
                   {activeStep === steps.length - 1 ? 'Place order' : 'Next'}

@@ -31,9 +31,6 @@ export default function SelectFurniture({propsFurniture
 
     const info = useContext(DeliveryInfoContext)
     const navigate= useNavigate();
-    // const [elevatorFrom, setElevatorFrom] = useState("yes");
-    // const [elevatorTo, setElevatorTo] = useState("yes");
-    // console.log(info.fromInfo)
 
 
 
