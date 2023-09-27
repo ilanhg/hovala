@@ -11,15 +11,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { HomePageProps } from "../pages/HomePage";
 import { DeliveryInfoContext } from "../context/deliveryInfoContext";
-import { useForm} from "react-hook-form"
-import { FormControl } from '@mui/base/FormControl';
+import { useForm } from "react-hook-form";
 
-type Formvalues={
-  from:string;
-  to:string;
-  date:string;
-  time:string;
-}
+
+type Formvalues = {
+  from: string;
+  to: string;
+  date: string;
+  time: string;
+};
 
 export default function PickerDateAndTime({
   propsHome: { setFromInfo, setToInfo, setTime, setDate },
@@ -27,7 +27,6 @@ export default function PickerDateAndTime({
   const info = useContext(DeliveryInfoContext);
   const [from, setFrom] = useState([]);
   const [to, setTo] = useState([]);
-
 
   const { fromInfo, toInfo, time, date } = info;
   // console.log(info)
@@ -54,28 +53,26 @@ export default function PickerDateAndTime({
       console.error("Error");
     }
   };
-  const form  = useForm<Formvalues>({
-    defaultValues:{
-      from:'',
-      to:'',
-      date:'',
-      time:''
-    }
-    
-  })
-  const{
-    handleSubmit,
-  }=form
+  const form = useForm<Formvalues>({
+    defaultValues: {
+      from: "",
+      to: "",
+      date: "",
+      time: "",
+    },
+  });
+  const { handleSubmit } = form;
   return (
     <>
-      <Container component='form' onSubmit={handleSubmit(()=>navigate('/selectFurniture'))}
+      <Container
+        component="form"
+        onSubmit={handleSubmit(() => navigate("/selectFurniture"))}
         sx={{
           alignItems: "center",
         }}
       >
-       
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer 
+          <DemoContainer
             components={["DatePicke,TimePicker,Autocomplete"]}
             sx={{ justifyContent: "center" }}
           >
@@ -104,12 +101,13 @@ export default function PickerDateAndTime({
             />
 
             <Autocomplete
-            fullWidth
+              fullWidth
               noOptionsText="No locations"
               options={to.map((result: any) => result.name)}
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  required
                   label="To"
                   variant="outlined"
                   fullWidth
@@ -123,36 +121,28 @@ export default function PickerDateAndTime({
             />
 
             <DatePicker
+            disablePast={true}
               label="Date"
               value={date}
-              onChange={(newValue) => 
-                {
-                 newValue= newValue.format("DD/MM/YYYY")
+              onChange={(newValue) => {
+                newValue = newValue.format("DD/MM/YYYY");
                 setDate(newValue);
                 console.log(newValue);
-
-                }
-              }
+              }}
             />
             <TimePicker
+              
               label="Time"
               ampm={false}
               value={time}
-              onChange={(newValue) => 
-                {
-                  newValue=newValue.format("HH:mm");
-                  setTime(newValue);
-                  console.log(newValue);
-                }
-
-              }
+              onChange={(newValue) => {
+                newValue = newValue.format("HH:mm");
+                setTime(newValue);
+                console.log(newValue);
+              }}
             />
 
-            <Button
-            fullWidth
-              variant="contained"
-              type="submit"
-            >
+            <Button fullWidth variant="contained" type="submit">
               Let's go!
             </Button>
           </DemoContainer>

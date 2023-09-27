@@ -12,10 +12,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { useNavigate } from "react-router-dom";
-import Badge from '@mui/material/Badge';
 import { AuthContext } from '../context/authContext';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import axios from 'axios';
 
 
   

@@ -1,5 +1,5 @@
-import { Typography,Link, Box } from '@mui/material'
 import React from 'react'
+import { Typography,Link, Box } from '@mui/material'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
@@ -10,7 +10,7 @@ export default function Footer() {
         <Typography variant="h6" align="center" gutterBottom>
         <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="">
         HovalaClick.com
       </Link>{" "}
       {new Date().getFullYear()}
